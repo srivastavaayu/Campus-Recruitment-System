@@ -1,0 +1,8 @@
+#manageUsersContainer {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+#manageUsersContainer > :nth-child(2) {
+  margin-top: 4vh;
+}

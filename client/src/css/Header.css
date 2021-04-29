@@ -1,0 +1,16 @@
+.navbar-brand > img {
+  margin: 10px;
+}
+.navbar-brand {
+  display: flex;
+}
+#headerBrandName {
+  font-size: 1.7em;
+  align-self: center;
+  color: black;
+  margin-bottom: 0;
+}
+nav .navbar-collapse {
+  align-self: center;
+  font-size: 1.2em;
+}
