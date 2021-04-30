@@ -14,6 +14,14 @@ const adminSchema = mongoose.Schema({
         type: 'string',
         required:'true'
     },
+    email: {
+        type: 'string',
+        required:'true'
+    },
+    phone:{
+        type: 'string',
+        required:'true'
+    },
     role: {
         type: 'string',
         default: 'admin'

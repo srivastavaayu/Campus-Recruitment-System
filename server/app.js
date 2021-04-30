@@ -15,6 +15,8 @@ const PORT = process.env.PORT;
 
 app.use(require('./router/auth'));
 app.use(require('./api/jobOpening'));
+app.use(require("./api/updateData"));
+app.use(require("./api/notification"));
 app.get("",(req,res)=>{
     res.send("hello user");
 });

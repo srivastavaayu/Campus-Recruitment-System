@@ -1,8 +1,66 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React,{useEffect,useState} from "react";
+import { Link ,useHistory} from "react-router-dom";
 import Header from "./Header";
 
 function AllNotifications() {
+  //backend for Notifications
+  const [notifyData,setNotifyData] = useState({});
+  const history = useHistory();
+
+  const callAboutPage = async ()=>{
+    try{
+      const res = await fetch('/getNotification',{
+        method:"GET",
+        headers:{
+          Accept: "application/json",
+          "Content-Type": "application/json"
+          },
+          credentials:"include"
+      });
+
+      const data = await res.json();
+      console.log(data);
+      setNotifyData(data);
+            
+
+
+      if(!res.status ===200){
+        const error = new Error(res.error);
+          throw error;
+        }
+
+        }catch(err){
+            console.log(err);
+            history.push('');
+
+        }
+  }
+
+  const target = (data) =>{
+
+    let result="";
+    if(data.students){
+      result+="Students,"
+    }
+    if(data.companies){
+      result+=" Companies,"
+    }
+    if(data.placementCoordinators){
+      result+=" Placement Coordinators"
+    }
+
+    return result;
+
+  }
+
+  useEffect(()=>{
+    callAboutPage();
+  },[]);
+
+
+  
+
+
   return (
     <>
       <table className="table">
@@ -18,10 +76,10 @@ function AllNotifications() {
         <tbody>
           <tr>
             <td>1</td>
-            <td>{new Date().toString()}</td>
-            <td>Placement Coordinators</td>
-            <td>Title</td>
-            <td>Message</td>
+            <td>{notifyData.date}</td>
+            <td>{target(notifyData)}</td>
+            <td>{notifyData.title}</td>
+            <td>{notifyData.message}</td>
           </tr>
         </tbody>
       </table>
@@ -30,6 +88,71 @@ function AllNotifications() {
 }
 
 function Notifications() {
+ 
+  //backend for
+  const [data,setData]=useState({
+    students:"false",
+    placementCoordinators:"false",
+    companies:"false",
+    title:"",
+    message:"",
+  });
+
+  let name,value;
+  const handleInputs = (e) =>{
+    //console.log(e.target.name);
+    //console.log(e.target.value);
+
+    name= e.target.name;
+    value = e.target.value;
+
+    if(e.target.checked){
+      data[name] = "true";
+    }else{
+      data[name] = "false";
+    }
+  }
+
+  const handleInputsChange = (e) => {
+    name = e.target.name;
+    value=e.target.value;
+
+    setData({...data,[name]:value})
+  }
+
+  const sendNotification = async (e) =>{
+     e.preventDefault();
+
+     console.log(data);
+
+     const {students,placementCoordinators,companies,title,message} = data;
+     console.log(students,placementCoordinators,companies,title,message);
+      try{
+        const res = await fetch("/notifyData",{
+          method:"POST",
+          headers:{
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            students,placementCoordinators,companies,title,message
+          })
+        });
+
+     const resdt = await res.json();
+
+     if(res.status===201){
+      console.log("Notification successfull");
+      window.alert("Notification successfull");
+     }else{
+      console.log("Notification unsuccessfull");
+      window.alert("Notification unsuccessfull");
+     }
+
+    }catch(e){
+      console.log(e);
+    }
+  }
+
   return (
     <>
       <Header />
@@ -42,6 +165,7 @@ function Notifications() {
           tabIndex="-1"
         >
           <div className="modal-dialog modal-dialog-centered">
+            <form method="POST">
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">Add Notification</h5>
@@ -58,7 +182,8 @@ function Notifications() {
                       className="form-check-input"
                       type="checkbox"
                       value="Placement Coordinators"
-                      name="notification-target"
+                      name="placementCoordinators"
+                      onChange={handleInputs}
                     />
                     <label
                       className="form-check-label"
@@ -73,7 +198,8 @@ function Notifications() {
                       className="form-check-input"
                       type="checkbox"
                       value="Companies"
-                      name="notification-target"
+                      name="companies"
+                      onChange={handleInputs}
                     />
                     <label
                       className="form-check-label"
@@ -88,7 +214,8 @@ function Notifications() {
                       className="form-check-input"
                       type="checkbox"
                       value="Students"
-                      name="notification-target"
+                      name="students"
+                      onChange={handleInputs}
                     />
                     <label
                       className="form-check-label"
@@ -107,7 +234,9 @@ function Notifications() {
                     className="form-control"
                     type="text"
                     placeholder="Notification Title"
-                    name="notification-title"
+                    name="title"
+                    value={data.title}
+                    onChange={handleInputsChange}
                   />
                 </div>
                 <label
@@ -122,7 +251,9 @@ function Notifications() {
                     className="form-control"
                     type="text"
                     placeholder="Notification Message"
-                    name="notification-message"
+                    name="message"
+                    value={data.message}
+                    onChange={handleInputsChange}
                     rows="4"
                   />
                 </div>
@@ -131,11 +262,12 @@ function Notifications() {
                 <button className="btn btn-secondary" data-bs-dismiss="modal">
                   Close
                 </button>
-                <button type="button" className="btn btn-primary">
+                <button type="button" className="btn btn-primary" onClick={sendNotification}>
                   Push Notification
                 </button>
               </div>
             </div>
+            </form>
           </div>
         </div>
         <div className="text-center">

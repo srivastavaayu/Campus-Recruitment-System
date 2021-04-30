@@ -99,7 +99,7 @@ function Header(props) {
                     role="button"
                     data-bs-toggle="dropdown"
                   >
-                    @{userData.name}
+                    @{userData.userName}
                   </a>
                   <div className="dropdown-menu dropdown-menu-end">
                     <NavLink className="dropdown-item" to="/Company/Profile">

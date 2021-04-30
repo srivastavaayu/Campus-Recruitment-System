@@ -1,8 +1,46 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React ,{useEffect,useState} from "react";
+import { Link,useHistory } from "react-router-dom";
 import Header from "./Header";
 
 function AllNotifications() {
+  //backend for all notifications
+
+  const [notifyData,setNotifyData] = useState({});
+  const history = useHistory();
+
+  const callAboutPage = async ()=>{
+    try{
+      const res = await fetch('/getNotification',{
+        method:"GET",
+        headers:{
+          Accept: "application/json",
+          "Content-Type": "application/json"
+          },
+          credentials:"include"
+      });
+
+      const data = await res.json();
+      console.log(data);
+      setNotifyData(data);
+            
+
+
+      if(!res.status ===200){
+        const error = new Error(res.error);
+          throw error;
+        }
+
+        }catch(err){
+            console.log(err);
+            history.push('');
+
+        }
+  }
+
+  useEffect(()=>{
+    callAboutPage();
+  },[]);
+
   return (
     <>
       <table className="table">
@@ -17,9 +55,9 @@ function AllNotifications() {
         <tbody>
           <tr>
             <td>1</td>
-            <td>{new Date().toString()}</td>
-            <td>Title</td>
-            <td>Message</td>
+            <td>{notifyData.date}</td>
+            <td>{notifyData.title}</td>
+            <td>{notifyData.message}</td>
           </tr>
         </tbody>
       </table>

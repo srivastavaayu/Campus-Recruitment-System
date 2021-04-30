@@ -16,18 +16,18 @@ router.post('/register',async (req,res)=>{
     const role = req.body.role;
     if (role == 'company'){
         console.log("Inside Company");
-        const { name,password,email,phone,companyLink,companyDescription,address,criteria} = req.body;
+        const { userName,name,password,email,phone,companyLink,companyDescription,address,criteria} = req.body;
 
-        if(!name || !password || !email || !phone || !companyLink || !companyDescription){
+        if(!userName || !name || !password || !email || !phone || !companyLink || !companyDescription){
             return res.status(422).json({error : "Plz filled the details"});
         }
 
         try{
-            const companyExist = await Company.findOne({name});
+            const companyExist = await Company.findOne({userName});
             if(companyExist){
                 return res.status(422).json({error : "Already Company registered"});
             }
-            const company = new Company({name,password,email,phone,companyLink,companyDescription,address,criteria});
+            const company = new Company({userName,name,password,email,phone,companyLink,companyDescription,address,criteria});
 
             // generate salt to hash password
             const salt = await bcrypt.genSalt(12);
@@ -104,8 +104,8 @@ router.post('/register',async (req,res)=>{
 
     }else if(role=='admin'){
         console.log("Inside admin");
-        const {userName,name,password}=req.body;
-        if(!userName || !name || !password){
+        const {userName,name,password,email,phone}=req.body;
+        if(!userName || !name || !password || !email || !phone){
             return res.status(422).json({error : "Plz filled the details"});
         }
         try{
@@ -113,7 +113,7 @@ router.post('/register',async (req,res)=>{
             if(adminExist){
                 return res.status(422).json({error : "Already username registered"});
             }
-            const admin = new Admin({userName,name,password});
+            const admin = new Admin({userName,name,password,email,phone});
 
             // generate salt to hash password
             const salt = await bcrypt.genSalt(12);
@@ -209,9 +209,8 @@ router.post('/login',async (req,res)=>{
     }else if(member == 'Company'){
         console.log("Inside Company");
         const {userName,password} = req.body;
-        const name=userName;
         try{
-            const companyLogin = await Company.findOne({name});
+            const companyLogin = await Company.findOne({userName});
             if(companyLogin){
                 const validPassword = await bcrypt.compare(password, companyLogin.password);
                 if(validPassword){
