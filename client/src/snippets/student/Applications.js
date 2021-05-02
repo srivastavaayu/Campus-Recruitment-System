@@ -25,7 +25,11 @@ function CurrentApplications() {
               <span className="badge bg-danger rounded-pill">Rejected</span>
             </td>
             <td>
-              <button className="btn btn-outline-primary">
+              <button
+                className="btn btn-outline-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#studentViewApplication"
+              >
                 View Application
               </button>
             </td>
@@ -41,6 +45,35 @@ function Applications() {
     <>
       <Header />
       <main>
+        <div
+          className="modal fade"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          id="studentViewApplication"
+          tabIndex="-1"
+        >
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">View Application</h5>
+                <button className="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div className="modal-body">
+                <label className="form-label">Job ID</label>
+                <input className="form-control" type="text" value="" disabled />
+                <label className="form-label">Job Title</label>
+                <input className="form-control" type="text" value="" disabled />
+                <label className="form-label">Name</label>
+                <input className="form-control" type="text" value="" disabled />
+              </div>
+              <div className="modal-footer">
+                <button className="btn btn-secondary" data-bs-dismiss="modal">
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
         <div className="text-center">
           <h2 id="webpageTitle">Applications</h2>
           <hr />

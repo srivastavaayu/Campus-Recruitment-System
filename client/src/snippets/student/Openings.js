@@ -1,46 +1,40 @@
-import React ,{ useState, useEffect } from "react";
-import { Link,useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
 import Header from "./Header";
 
 function CurrentOpenings() {
-
   //Back end
-  const [jobData,setJobData] = useState({});
+  const [jobData, setJobData] = useState([]);
   const history = useHistory();
 
-  const callAboutPage = async ()=>{
-    try{
-      const res = await fetch('/jobopenings',{
-        method:"GET",
-        headers:{
+  const callAboutPage = async () => {
+    try {
+      const res = await fetch("/jobopenings", {
+        method: "GET",
+        headers: {
           Accept: "application/json",
-          "Content-Type": "application/json"
-          },
-          credentials:"include"
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
       });
 
       const data = await res.json();
       console.log(data);
       setJobData(data);
-            
 
-
-      if(!res.status ===200){
+      if (!res.status === 200) {
         const error = new Error(res.error);
-          throw error;
-        }
+        throw error;
+      }
+    } catch (err) {
+      console.log(err);
+      history.push("");
+    }
+  };
 
-        }catch(err){
-            console.log(err);
-            history.push('');
-
-        }
-  }
-
-  useEffect(()=>{
+  useEffect(() => {
     callAboutPage();
-  },[]);
-
+  }, []);
 
   return (
     <>
@@ -54,14 +48,18 @@ function CurrentOpenings() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>{jobData.creatorName}</td>
-            <td>{jobData.title}</td>
-            <td>
-              <button className="btn btn-outline-primary">View Job</button>
-            </td>
-          </tr>
+          {jobData.map(({ creatorName, title }, id) => {
+            return (
+              <tr>
+                <td>{id + 1}</td>
+                <td>{creatorName}</td>
+                <td>{title}</td>
+                <td>
+                  <button className="btn btn-outline-primary">View Job</button>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </>
@@ -69,7 +67,6 @@ function CurrentOpenings() {
 }
 
 function Openings() {
-
   return (
     <>
       <Header />

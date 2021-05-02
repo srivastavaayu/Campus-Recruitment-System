@@ -1,45 +1,39 @@
-import React ,{ useState, useEffect } from "react";
-import { Link,useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
 import Header from "./Header";
 
 function CurrentOpenings() {
-
   //back end
-  const [jobData,setJobData] = useState({});
+  const [jobData, setJobData] = useState([]);
   const history = useHistory();
-
-  const callAboutPage = async ()=>{
-    try{
-      const res = await fetch('/jobopenings',{
-        method:"GET",
-        headers:{
+  const callAboutPage = async () => {
+    try {
+      const res = await fetch("/jobopenings", {
+        method: "GET",
+        headers: {
           Accept: "application/json",
-          "Content-Type": "application/json"
-          },
-          credentials:"include"
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
       });
 
       const data = await res.json();
       console.log(data);
       setJobData(data);
-            
 
-
-      if(!res.status ===200){
+      if (!res.status === 200) {
         const error = new Error(res.error);
-          throw error;
-        }
+        throw error;
+      }
+    } catch (err) {
+      console.log(err);
+      history.push("");
+    }
+  };
 
-        }catch(err){
-            console.log(err);
-            history.push('');
-
-        }
-  }
-
-  useEffect(()=>{
+  useEffect(() => {
     callAboutPage();
-  },[]);
+  }, []);
 
   return (
     <>
@@ -53,14 +47,20 @@ function CurrentOpenings() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>{jobData.jobId}</td>
-            <td>{jobData.title}</td>
-            <td>
-              <button className="btn btn-outline-danger">Archive Job</button>
-            </td>
-          </tr>
+          {jobData.map(({ jobId, title }, id) => {
+            return (
+              <tr>
+                <td>{id + 1}</td>
+                <td>{jobId}</td>
+                <td>{title}</td>
+                <td>
+                  <button className="btn btn-outline-danger">
+                    Archive Job
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </>
@@ -68,47 +68,42 @@ function CurrentOpenings() {
 }
 
 function AllOpenings() {
-
   //back end for all Openings
 
-  const [jobData,setJobData] = useState({});
+  const [jobData, setJobData] = useState([]);
   const history = useHistory();
 
-  const callAboutPage = async ()=>{
-    try{
-      const res = await fetch('/jobopenings',{
-        method:"GET",
-        headers:{
+  const callAboutPage = async () => {
+    try {
+      const res = await fetch("/jobopenings", {
+        method: "GET",
+        headers: {
           Accept: "application/json",
-          "Content-Type": "application/json"
-          },
-          credentials:"include"
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
       });
 
       const data = await res.json();
       console.log(data);
       setJobData(data);
-            
 
-
-      if(!res.status ===200){
+      if (!res.status === 200) {
         const error = new Error(res.error);
-          throw error;
-        }
+        throw error;
+      }
+    } catch (err) {
+      console.log(err);
+      history.push("");
+    }
+  };
 
-        }catch(err){
-            console.log(err);
-            history.push('');
-
-        }
-  }
-
-  useEffect(()=>{
+  useEffect(() => {
     callAboutPage();
-  },[]);
+  }, []);
   return (
     <>
-      <table className="table">
+      <table className="table align-middle">
         <thead>
           <tr>
             <th>#</th>
@@ -117,11 +112,15 @@ function AllOpenings() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>{jobData.jobId}</td>
-            <td>{jobData.title}</td>
-          </tr>
+          {jobData.map(({ jobId, title }, id) => {
+            return (
+              <tr>
+                <td>{id + 1}</td>
+                <td>{jobId}</td>
+                <td>{title}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </>
@@ -129,59 +128,56 @@ function AllOpenings() {
 }
 
 function Openings() {
-
   //back end
 
   const history = useHistory();
-  const [job,setJob]=useState({
-    jobId:"",
-    title:"",
-    ctc:""
+  const [job, setJob] = useState({
+    jobId: "",
+    title: "",
+    ctc: "",
   });
 
-  let name,value;
-  const handleInputs = (e) =>{
-      console.log(e.target.value);
-      name = e.target.name;
-      value=e.target.value;
+  let name, value;
+  const handleInputs = (e) => {
+    console.log(e.target.value);
+    name = e.target.name;
+    value = e.target.value;
 
-      setJob({...job,[name]:value});
-  }
+    setJob({ ...job, [name]: value });
+  };
 
-  const addJob = async (e) =>{
-
+  const addJob = async (e) => {
     e.preventDefault();
 
-    const {jobId,title,ctc} = job;
+    const { jobId, title, ctc } = job;
 
-    try{
-      const res = await fetch("/job",{
-        method:"POST",
-        headers:{
-          "Content-Type": "application/json"
+    try {
+      const res = await fetch("/job", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-        body:JSON.stringify({
-          jobId,title,ctc
-        })
+        body: JSON.stringify({
+          jobId,
+          title,
+          ctc,
+        }),
       });
 
       const data = await res.json();
 
-      if(res.status===201){
+      if (res.status === 201) {
         console.log("Job created successfully");
         window.alert("Job created successfully");
         history.push("/Company/Openings");
-
-      }else{
+      } else {
         console.log("Job Id already exists");
         window.alert("Job Id already exists");
       }
-    }catch(e){
+    } catch (e) {
       console.log(e);
     }
-  }
-
-
+  };
 
   return (
     <>
@@ -201,71 +197,89 @@ function Openings() {
                 <button className="btn-close" data-bs-dismiss="modal"></button>
               </div>
               <form method="POST">
-              <div className="modal-body">
-                <label className="form-label" htmlFor="companyJobTitle">
-                  Job Id
-                </label>
-                <div className="input-group mb-3">
-                  <input
-                    id="companyJobTitle"
-                    className="form-control"
-                    type="text"
-                    placeholder="Job Title"
-                    name="jobId"
-                    value={job.jobId}
-                    onChange={handleInputs}
-                    required
-                  />
-                </div>
-                <label className="form-label" htmlFor="companyJobDescription">
-                  Job Title
-                </label>
-                <div className="input-group mb-3">
-                  <input
-                    id="companyJobDescription"
-                    className="form-control"
-                    type="text"
-                    placeholder="Job Description"
-                    name="title"
-                    value={job.title}
-                    onChange={handleInputs}
-                    rows="4"
-                    required
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="companyFileInputs" className="form-label">
-                    Attach Files
+                <div className="modal-body">
+                  <label className="form-label" htmlFor="companyJobId">
+                    Job Id
+                  </label>
+                  <div className="input-group mb-3">
+                    <input
+                      id="companyJobId"
+                      className="form-control"
+                      type="text"
+                      placeholder="Job ID"
+                      name="jobId"
+                      value={job.jobId}
+                      onChange={handleInputs}
+                      required
+                    />
+                  </div>
+                  <label className="form-label" htmlFor="companyJobTitle">
+                    Job Id
+                  </label>
+                  <div className="input-group mb-3">
+                    <input
+                      id="companyJobTitle"
+                      className="form-control"
+                      type="text"
+                      placeholder="Job Title"
+                      name="jobId"
+                      value={job.title}
+                      onChange={handleInputs}
+                      required
+                    />
+                  </div>
+                  <label className="form-label" htmlFor="companyJobDescription">
+                    Job Title
+                  </label>
+                  <div className="input-group mb-3">
+                    <textarea
+                      id="companyJobDescription"
+                      className="form-control"
+                      type="text"
+                      placeholder="Job Description"
+                      name="jobDescription"
+                      onChange={handleInputs}
+                      rows="4"
+                      required
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="companyFileInputs" className="form-label">
+                      Attach Files
+                    </label>
+                    <input
+                      class="form-control"
+                      type="file"
+                      id="companyFileInputs"
+                      multiple
+                    />
+                  </div>
+                  <label className="form-label" htmlFor="companyCTCOffered">
+                    CTC Offered
                   </label>
                   <input
-                    class="form-control"
-                    type="file"
-                    id="companyFileInputs"
-                    multiple
+                    id="companyCTCOffered"
+                    className="form-control"
+                    type="text"
+                    placeholder="CTC Offered"
+                    name="ctc"
+                    value={job.ctc}
+                    onChange={handleInputs}
+                    required
                   />
                 </div>
-                <label className="form-label" htmlFor="companyCTCOffered">
-                  CTC Offered
-                </label>
-                <input
-                  id="companyCTCOffered"
-                  className="form-control"
-                  type="text"
-                  placeholder="CTC Offered"
-                  name="ctc"
-                  value={job.ctc}
-                  onChange={handleInputs}
-                  required
-                />
-              </div>
-              <div className="modal-footer">
-                <button className="btn btn-secondary" data-bs-dismiss="modal">
-                  Close
-                </button>
-                <button type="Submit" className="btn btn-primary" onClick={addJob}>
-                  Add Job
-                </button>
-              </div>
+                <div className="modal-footer">
+                  <button className="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                  </button>
+                  <button
+                    type="Submit"
+                    className="btn btn-primary"
+                    onClick={addJob}
+                  >
+                    Add Job
+                  </button>
+                </div>
               </form>
             </div>
           </div>

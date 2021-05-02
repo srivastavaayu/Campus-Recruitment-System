@@ -1,46 +1,41 @@
-import React ,{useEffect,useState} from "react";
-import { Link,useHistory } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import Header from "./Header";
 
 function AllNotifications() {
-
   //backend for all notifications
 
-  const [notifyData,setNotifyData] = useState({});
+  const [notifyData, setNotifyData] = useState([]);
   const history = useHistory();
 
-  const callAboutPage = async ()=>{
-    try{
-      const res = await fetch('/getNotification',{
-        method:"GET",
-        headers:{
+  const callAboutPage = async () => {
+    try {
+      const res = await fetch("/getNotification", {
+        method: "GET",
+        headers: {
           Accept: "application/json",
-          "Content-Type": "application/json"
-          },
-          credentials:"include"
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
       });
 
       const data = await res.json();
       console.log(data);
       setNotifyData(data);
-            
 
-
-      if(!res.status ===200){
+      if (!res.status === 200) {
         const error = new Error(res.error);
-          throw error;
-        }
+        throw error;
+      }
+    } catch (err) {
+      console.log(err);
+      history.push("");
+    }
+  };
 
-        }catch(err){
-            console.log(err);
-            history.push('');
-
-        }
-  }
-
-  useEffect(()=>{
+  useEffect(() => {
     callAboutPage();
-  },[]);
+  }, []);
 
   return (
     <>
@@ -54,12 +49,16 @@ function AllNotifications() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>{notifyData.title}</td>
-            <td>{notifyData.title}</td>
-            <td>{notifyData.message}</td>
-          </tr>
+          {notifyData.map(({ date, title, message }, id) => {
+            return (
+              <tr>
+                <td>{id + 1}</td>
+                <td>{date}</td>
+                <td>{title}</td>
+                <td>{message}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </>

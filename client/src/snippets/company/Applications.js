@@ -26,12 +26,20 @@ function CurrentApplications() {
               <span className="badge bg-danger rounded-pill">Rejected</span>
             </td>
             <td>
-              <button className="btn btn-outline-primary">
+              <button
+                className="btn btn-outline-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#companyViewApplication"
+              >
                 View Application
               </button>
             </td>
             <td>
-              <button className="btn btn-outline-primary">
+              <button
+                className="btn btn-outline-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#companyChangeApplicationStatus"
+              >
                 Change Application Status
               </button>
             </td>
@@ -47,6 +55,109 @@ function Applications() {
     <>
       <Header />
       <main>
+        <div
+          className="modal fade"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          id="companyViewApplication"
+          tabIndex="-1"
+        >
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">View Application</h5>
+                <button className="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div className="modal-body">
+                <label className="form-label">Job ID</label>
+                <input className="form-control" type="text" value="" disabled />
+                <label className="form-label">Job Title</label>
+                <input className="form-control" type="text" value="" disabled />
+                <label className="form-label">Name</label>
+                <input className="form-control" type="text" value="" disabled />
+              </div>
+              <div className="modal-footer">
+                <button className="btn btn-secondary" data-bs-dismiss="modal">
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="modal fade"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          id="companyChangeApplicationStatus"
+          tabIndex="-1"
+        >
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">View Application</h5>
+                <button className="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div className="modal-body">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="companyApplicationsApplicationStatus"
+                    id="companyApplicationsApplicationStatus1"
+                  />
+                  <label
+                    class="form-check-label"
+                    for="companyApplicationsApplicationStatus1"
+                  >
+                    <span className="badge bg-danger rounded-pill">
+                      Rejected
+                    </span>
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="companyApplicationsApplicationStatus"
+                    id="companyApplicationsApplicationStatus2"
+                  />
+                  <label
+                    class="form-check-label"
+                    for="companyApplicationsApplicationStatus2"
+                  >
+                    <span className="badge bg-warning rounded-pill">
+                      Being Processed
+                    </span>
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="companyApplicationsApplicationStatus"
+                    id="companyApplicationsApplicationStatus3"
+                  />
+                  <label
+                    class="form-check-label"
+                    for="companyApplicationsApplicationStatus3"
+                  >
+                    <span className="badge bg-success rounded-pill">
+                      Selected
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button className="btn btn-secondary" data-bs-dismiss="modal">
+                  Close
+                </button>
+                <button type="Submit" className="btn btn-primary">
+                  Save Status
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
         <div className="text-center">
           <h2 id="webpageTitle">Applications</h2>
           <hr />
