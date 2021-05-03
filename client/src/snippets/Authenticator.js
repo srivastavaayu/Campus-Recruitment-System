@@ -1,133 +1,111 @@
 import React, { useState, useEffect } from "react";
-import { Link, NavLink,useHistory } from "react-router-dom";
+import { Link, NavLink, useHistory } from "react-router-dom";
 import "../css/Header.css";
 import "../css/Home.css";
 import crslogo from "../img/crslogo.png";
-import Select from 'react-select';
+import Select from "react-select";
 
 function Authenticator(props) {
   let [authMode, setAuthMode] = useState(props.location.state.authMode);
   let [authTitle, setAuthTitle] = useState("");
-  let [authModeText, setAuthModeText] = useState("");
-  let [authText, setAuthText] = useState("");
 
   useEffect(() => {
     if (authMode === "login") {
       setAuthTitle("Login to Campus Recruitment System");
-      setAuthModeText("Don't have an account? Signup here!");
-      setAuthText("Login");
-      document.getElementById("homeAuthButtonForgotPassword").style.display =
-        "inline-block";
-      document.getElementsByClassName("form-label")[3].style.display = "None";
-      document.getElementById(
-        "homeAuthReenterPasswordContainer"
-      ).style.display = "None";
+      document.getElementById("loginForm").style.display = "block";
+      document.getElementById("registerForm").style.display = "None";
     } else {
       setAuthTitle("Signup on Campus Recruitment System");
-      setAuthModeText("Already have an account? Login here!");
-      setAuthText("Signup");
-      document.getElementById("homeAuthButtonForgotPassword").style.display =
-        "None";
-      document.getElementsByClassName("form-label")[3].style.display =
-        "inline-block";
-      document.getElementById(
-        "homeAuthReenterPasswordContainer"
-      ).style.display = "flex";
+      document.getElementById("loginForm").style.display = "None";
+      document.getElementById("registerForm").style.display = "block";
     }
   }, [authMode]);
-
 
   //backend
   const history = useHistory();
   const data = [
     {
       value: 1,
-      label: "Admin"
+      label: "Admin",
     },
     {
       value: 2,
-      label: "Placement Coordinator"
+      label: "Placement Coordinator",
     },
     {
       value: 3,
-      label: "Company"
+      label: "Company",
     },
     {
       value: 4,
-      label: "Student"
-    }
+      label: "Student",
+    },
   ];
 
-
-  const [user,setUser] = useState({
-    member:"",
-    userName:"",
-    password:""
-
+  const [user, setUser] = useState({
+    member: "",
+    userName: "",
+    password: "",
   });
   const [selectedValue, setSelectedValue] = useState();
-  let name,value;
-  const handleInputs = (e) =>{
-      console.log(e.target.value);
-      name = e.target.name;
-      value=e.target.value;
+  let name, value;
+  const handleInputs = (e) => {
+    console.log(e.target.value);
+    name = e.target.name;
+    value = e.target.value;
 
-      setUser({...user,[name]:value});
-  }
+    setUser({ ...user, [name]: value });
+  };
   const handleChange = (e) => {
     setSelectedValue(e.label);
-    name="member";
-    value=e.label;
-    setUser({...user,[name]:value});
+    name = "member";
+    value = e.label;
+    setUser({ ...user, [name]: value });
     console.log(e.label);
     console.log(user.member);
-  }
+  };
 
-  const logIn = async (e) =>{
-
+  const logIn = async (e) => {
     e.preventDefault();
     console.log(user);
-    const {member,userName, password} = user;
-    try{
-      const res = await fetch("/login",{
-        method:"POST",
-        headers:{
-          "Content-Type": "application/json"
+    const { member, userName, password } = user;
+    try {
+      const res = await fetch("/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          member,userName, password
-        })
+          member,
+          userName,
+          password,
+        }),
       });
-  
+
       const data = await res.json();
-  
-      if (res.status ===202){
+
+      if (res.status === 202) {
         console.log("SuccessFul");
         window.alert("Successful");
 
-        if(member =='Student'){
+        if (member == "Student") {
           history.push("/Student/Home");
-        }else if(member=="Placement Coordinator"){
+        } else if (member == "Placement Coordinator") {
           history.push("/PlacementCoordinator/Home");
-        }else if(member=="Company"){
+        } else if (member == "Company") {
           history.push("/Company/Home");
-        }else if(member=="Admin"){
+        } else if (member == "Admin") {
           history.push("/Admin/Home");
         }
-      }else{
+      } else {
         console.log("Invalid Credantials");
         window.alert("Invalid Credantials");
       }
-    
-
-    }catch(e){
+    } catch (e) {
       console.log("Error");
       console.log(e);
     }
-  }
-
-    
-  
+  };
 
   return (
     <>
@@ -173,27 +151,27 @@ function Authenticator(props) {
       </header>
       <main id="homeAuthMain">
         <h2 className="text-center">{authTitle}</h2>
-        <form action="" method="POST">
+        <form id="loginForm" action="" method="POST">
           <div className="mb-3">
-          <label className="form-label" htmlFor="homeAuthMemberType">
+            <label className="form-label" htmlFor="InputLoginMemberType">
               Member Type
             </label>
             <Select
-        placeholder="Select Option"
-        name="member"
-        value={data.find(obj => obj.value === selectedValue)} // set selected value
-        options={data} // set list of the data
-        onChange={handleChange} // assign onChange function
-      />
-
+              id="InputLoginMemberType"
+              placeholder="Select Option"
+              name="member"
+              value={data.find((obj) => obj.value === selectedValue)} // set selected value
+              options={data} // set list of the data
+              onChange={handleChange} // assign onChange function
+            />
           </div>
-          <label className="form-label" htmlFor="homeAuthUsername">
+          <label className="form-label" htmlFor="InputLoginUsername">
             Username
           </label>
           <div className="input-group mb-3">
             <span className="input-group-text">@</span>
             <input
-              id="homeAuthUsername"
+              id="InputLoginUsername"
               className="form-control"
               type="text"
               placeholder="Username"
@@ -203,12 +181,12 @@ function Authenticator(props) {
               required
             />
           </div>
-          <label className="form-label" htmlFor="homeAuthPassword">
+          <label className="form-label" htmlFor="InputLoginPassword">
             Password
           </label>
           <div className="input-group mb-3">
             <input
-              id="homeAuthPassword"
+              id="InputLoginPassword"
               className="form-control"
               type="password"
               placeholder="Password"
@@ -224,15 +202,74 @@ function Authenticator(props) {
               Forgot Password?
             </button>
           </div>
-          <label className="form-label" htmlFor="homeAuthReenterPassword">
+          <button
+            className="btn btn-primary float-start"
+            onClick={() =>
+              setAuthMode(authMode === "login" ? "signup" : "login")
+            }
+          >
+            New to Campus Recruitment System? Register here!
+          </button>
+          <button
+            className="btn btn-success float-end"
+            onClick={logIn}
+            type="submit"
+          >
+            Login
+          </button>
+        </form>
+        <form id="registerForm" action="" method="POST">
+          <div className="mb-3">
+            <label className="form-label" htmlFor="InputRegisterMemberType">
+              Member Type
+            </label>
+            <Select
+              id="InputRegisterMemberType"
+              placeholder="Select Option"
+              name="member"
+              value={data.find((obj) => obj.value === selectedValue)} // set selected value
+              options={data} // set list of the data
+              onChange={handleChange} // assign onChange function
+            />
+          </div>
+          <label className="form-label" htmlFor="InputRegisterUsername">
+            Username
+          </label>
+          <div className="input-group mb-3">
+            <span className="input-group-text">@</span>
+            <input
+              id="InputRegisterUsername"
+              className="form-control"
+              type="text"
+              placeholder="Username"
+              name="userName"
+              value={user.userName}
+              onChange={handleInputs}
+              required
+            />
+          </div>
+          <label className="form-label" htmlFor="InputRegisterPassword">
+            Password
+          </label>
+          <div className="input-group mb-3">
+            <input
+              id="InputRegisterPassword"
+              className="form-control"
+              type="password"
+              placeholder="Password"
+              name="password"
+              value={user.password}
+              onChange={handleInputs}
+              required
+            />
+          </div>
+
+          <label className="form-label" htmlFor="InputRegisterReenterPassword">
             Re-enter Password
           </label>
-          <div
-            id="homeAuthReenterPasswordContainer"
-            className="input-group mb-3"
-          >
+          <div className="input-group mb-3">
             <input
-              id="homeAuthReenterPassword"
+              id="InputRegisterReenterPassword"
               className="form-control"
               type="password"
               placeholder="Re-enter Password"
@@ -248,13 +285,14 @@ function Authenticator(props) {
               setAuthMode(authMode === "login" ? "signup" : "login")
             }
           >
-            {authModeText}
+            Already have an account? Login here!
           </button>
-          <button className="btn btn-success float-end" 
-            onClick = {logIn}
-          type="submit">
-            {authText}
-          
+          <button
+            className="btn btn-success float-end"
+            onClick={logIn}
+            type="submit"
+          >
+            Register
           </button>
         </form>
       </main>
