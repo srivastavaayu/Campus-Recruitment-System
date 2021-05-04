@@ -1,7 +1,62 @@
-import React from "react";
+import React, { useEffect,useState } from "react";
+import { Link, NavLink ,useHistory} from "react-router-dom";
 import Header from "./Header";
 
 function ChangePassword() {
+
+  //backend
+
+  const [userData,setUserData] = useState({
+    cpassword:"",
+    npassword:"",
+    rpassword:"",
+  });
+  const history = useHistory();
+
+  let name,value;
+  const handleInputs = (e) =>{
+      //console.log(e.target.value);
+      name = e.target.name;
+      value=e.target.value;
+
+      setUserData({...userData,[name]:value});
+  }
+
+  const updatePassword = async (e) =>{
+
+    e.preventDefault();
+
+    console.log(userData);
+    const {cpassword,npassword,rpassword} = userData;
+
+    try{
+
+      const res = await fetch("/updatePassword",{
+        method:"POST",
+        headers:{
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          cpassword,npassword,rpassword
+        })
+      });
+
+      const data = await res.json();
+
+      if (res.status ===202){
+        console.log(data.message);
+        window.alert(data.message);
+      }else{
+        console.log(data.message);
+        window.alert(data.message);
+      }
+    }catch(e){
+      console.log(e);
+    }
+
+  }
+
+
   return (
     <>
       <Header />
@@ -21,7 +76,9 @@ function ChangePassword() {
                   className="form-control"
                   type="text"
                   placeholder="Current Password"
-                  name="adminCurrentPassword"
+                  name="cpassword"
+                  value={userData.cpassword}
+                  onChange={handleInputs}
                 />
               </div>
             </div>
@@ -32,7 +89,9 @@ function ChangePassword() {
                   className="form-control"
                   type="text"
                   placeholder="New Password"
-                  name="adminNewPassword"
+                  name="npassword"
+                  value={userData.npassword}
+                  onChange={handleInputs}
                 />
               </div>
             </div>
@@ -45,12 +104,14 @@ function ChangePassword() {
                   className="form-control"
                   type="text"
                   placeholder="Re-enter New Password"
-                  name="adminReenterNewPassword"
+                  name="rpassword"
+                  value={userData.rpassword}
+                  onChange={handleInputs}
                 />
               </div>
             </div>
           </div>
-          <button className="btn btn-primary float-end" type="submit">
+          <button className="btn btn-primary float-end" type="submit" onClick={updatePassword}>
             Save Changes
           </button>
           <button className="btn btn-danger float-end me-3" type="button">

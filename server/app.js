@@ -17,6 +17,7 @@ app.use(require('./router/auth'));
 app.use(require('./api/jobOpening'));
 app.use(require("./api/updateData"));
 app.use(require("./api/notification"));
+app.use(require("./api/password"));
 app.get("",(req,res)=>{
     res.send("hello user");
 });
