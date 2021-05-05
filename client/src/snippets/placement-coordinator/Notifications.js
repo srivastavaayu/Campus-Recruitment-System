@@ -1,60 +1,53 @@
-import React ,{useEffect,useState} from "react";
-import { Link,useHistory } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import Header from "./Header";
 
 function AllNotifications() {
-
   //backend for all notifications
 
-  const [notifyData,setNotifyData] = useState({});
+  const [notifyData, setNotifyData] = useState([]);
   const history = useHistory();
 
-  const callAboutPage = async ()=>{
-    try{
-      const res = await fetch('/getNotification',{
-        method:"GET",
-        headers:{
+  const callAboutPage = async () => {
+    try {
+      const res = await fetch("/getNotification", {
+        method: "GET",
+        headers: {
           Accept: "application/json",
-          "Content-Type": "application/json"
-          },
-          credentials:"include"
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
       });
 
       const data = await res.json();
       console.log(data);
       setNotifyData(data);
-            
 
-
-      if(!res.status ===200){
+      if (!res.status === 200) {
         const error = new Error(res.error);
-          throw error;
-        }
-
-        }catch(err){
-            console.log(err);
-            history.push('');
-
-        }
-  }
-
-  const target = (data) =>{
-
-    let result="";
-    if(data.students){
-      result+="Students,"
+        throw error;
+      }
+    } catch (err) {
+      console.log(err);
+      history.push("");
     }
-    if(data.companies){
-      result+="Companies"
+  };
+
+  const target = (data) => {
+    let result = "";
+    if (data.students) {
+      result += "Students,";
+    }
+    if (data.companies) {
+      result += "Companies";
     }
 
     return result;
+  };
 
-  }
-
-  useEffect(()=>{
+  useEffect(() => {
     callAboutPage();
-  },[]);
+  }, []);
 
   return (
     <>
@@ -69,13 +62,17 @@ function AllNotifications() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>{notifyData.date}</td>
-            <td>{target(notifyData)}</td>
-            <td>{notifyData.title}</td>
-            <td>{notifyData.message}</td>
-          </tr>
+          {notifyData.map(({ date, title, message }, id) => {
+            return (
+              <tr>
+                <td>{id + 1}</td>
+                <td>{date}</td>
+                <td>{target(notifyData)}</td>
+                <td>{title}</td>
+                <td>{message}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </>
@@ -83,71 +80,70 @@ function AllNotifications() {
 }
 
 function Notifications() {
-
-
-
   //backend for
-  const [data,setData]=useState({
-    students:"false",
-    companies:"false",
-    title:"",
-    message:"",
+  const [data, setData] = useState({
+    students: "false",
+    companies: "false",
+    title: "",
+    message: "",
   });
 
-  let name,value;
-  const handleInputs = (e) =>{
+  let name, value;
+  const handleInputs = (e) => {
     //console.log(e.target.name);
     //console.log(e.target.value);
 
-    name= e.target.name;
+    name = e.target.name;
     value = e.target.value;
 
-    if(e.target.checked){
+    if (e.target.checked) {
       data[name] = "true";
-    }else{
+    } else {
       data[name] = "false";
     }
-  }
+  };
 
   const handleInputsChange = (e) => {
     name = e.target.name;
-    value=e.target.value;
+    value = e.target.value;
 
-    setData({...data,[name]:value})
-  }
+    setData({ ...data, [name]: value });
+  };
 
-  const sendNotification = async (e) =>{
-     e.preventDefault();
+  const sendNotification = async (e) => {
+    e.preventDefault();
 
-     console.log(data);
+    console.log(data);
 
-     const {students,companies,title,message} = data;
-     console.log(students,companies,title,message);
-      try{
-        const res = await fetch("/notifyData",{
-          method:"POST",
-          headers:{
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            students,companies,title,message
-          })
-        });
+    const { students, companies, title, message } = data;
+    console.log(students, companies, title, message);
+    try {
+      const res = await fetch("/notifyData", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          students,
+          companies,
+          title,
+          message,
+        }),
+      });
 
-     const resdt = await res.json();
+      const resdt = await res.json();
 
-     if(res.status===201){
-      console.log("Notification successfull");
-      window.alert("Notification successfull");
-     }else{
-      console.log("Notification unsuccessfull");
-      window.alert("Notification unsuccessfull");
-     }
-
-    }catch(e){
+      if (res.status === 201) {
+        console.log("Notification successfull");
+        window.alert("Notification successfull");
+      } else {
+        console.log("Notification unsuccessfull");
+        window.alert("Notification unsuccessfull");
+      }
+    } catch (e) {
       console.log(e);
     }
-  }
+  };
 
   return (
     <>
@@ -247,7 +243,11 @@ function Notifications() {
                 <button className="btn btn-secondary" data-bs-dismiss="modal">
                   Close
                 </button>
-                <button type="button" className="btn btn-primary" onClick={sendNotification}>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={sendNotification}
+                >
                   Push Notification
                 </button>
               </div>

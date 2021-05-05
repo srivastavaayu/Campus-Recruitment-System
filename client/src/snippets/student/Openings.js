@@ -55,7 +55,13 @@ function CurrentOpenings() {
                 <td>{creatorName}</td>
                 <td>{title}</td>
                 <td>
-                  <button className="btn btn-outline-primary">View Job</button>
+                  <button
+                    className="btn btn-outline-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#studentViewJob"
+                  >
+                    View Job
+                  </button>
                 </td>
               </tr>
             );
@@ -71,6 +77,102 @@ function Openings() {
     <>
       <Header />
       <main>
+        <div
+          className="modal fade"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          id="studentViewJob"
+          tabIndex="-1"
+        >
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">View Job</h5>
+                <button className="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div className="modal-body">
+                <label
+                  className="form-label"
+                  htmlFor="studentViewJobCompanyName"
+                >
+                  Company Name
+                </label>
+                <div className="input-group mb-3">
+                  <input
+                    id="studentViewJobCompanyName"
+                    className="form-control"
+                    type="text"
+                    placeholder="Company Name"
+                    name="CompanyName"
+                  />
+                </div>
+                <label
+                  className="form-label"
+                  htmlFor="studentViewJobCompanyDescription"
+                >
+                  Company Description
+                </label>
+                <div className="input-group mb-3">
+                  <input
+                    id="studentViewJobCompanyDescription"
+                    className="form-control"
+                    type="text"
+                    placeholder="Company Description"
+                    name="CompanyDescription"
+                  />
+                </div>
+                <label className="form-label" htmlFor="studentViewJobJobID">
+                  Job ID
+                </label>
+                <div className="input-group mb-3">
+                  <input
+                    id="studentViewJobJobID"
+                    className="form-control"
+                    type="text"
+                    placeholder="Job ID"
+                    name="JobID"
+                  />
+                </div>
+                <label className="form-label" htmlFor="studentViewJobJobTitle">
+                  Job Title
+                </label>
+                <div className="input-group mb-3">
+                  <input
+                    id="studentViewJobJobTitle"
+                    className="form-control"
+                    type="text"
+                    placeholder="Job Title"
+                    name="JobTitle"
+                  />
+                </div>
+                <label
+                  className="form-label"
+                  htmlFor="studentViewJobJobDescription"
+                >
+                  Job Description
+                </label>
+                <div className="input-group mb-3">
+                  <textarea
+                    id="studentViewJobJobDescription"
+                    className="form-control"
+                    type="text"
+                    placeholder="Job Description"
+                    name="message"
+                    rows="4"
+                  />
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button className="btn btn-secondary" data-bs-dismiss="modal">
+                  Close
+                </button>
+                <button type="button" className="btn btn-primary">
+                  Apply to this job
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
         <div className="text-center">
           <h2 id="webpageTitle">Openings</h2>
           <hr />
