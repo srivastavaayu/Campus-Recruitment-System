@@ -30,6 +30,37 @@ function CurrentOpenings() {
       history.push("");
     }
   };
+  //job archive back-end code
+  const archive = async (jobId,title)=>{
+    console.log("Inside Archive function");
+    console.log(jobId);
+    console.log(title);
+
+    try{
+      const res = await fetch("/jobArchive",{
+        method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            jobId,
+            title
+          })
+        });
+
+        const data = await res.json();
+
+        if(res.status===202){
+          console.log(data.message);
+          window.alert(data.message);
+        }else{
+          console.log(data.message);
+          window.alert(data.message);
+        }
+    }catch (err) {
+      console.log(err);
+    }
+  }
 
   useEffect(() => {
     callAboutPage();
@@ -54,7 +85,7 @@ function CurrentOpenings() {
                 <td>{jobId}</td>
                 <td>{title}</td>
                 <td>
-                  <button className="btn btn-outline-danger">
+                  <button className="btn btn-outline-danger" onClick={archive.bind(this,jobId, title)}>
                     Archive Job
                   </button>
                 </td>
@@ -75,7 +106,7 @@ function AllOpenings() {
 
   const callAboutPage = async () => {
     try {
-      const res = await fetch("/jobopenings", {
+      const res = await fetch("/alljobopenings", {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -214,7 +245,7 @@ function Openings() {
                     />
                   </div>
                   <label className="form-label" htmlFor="companyJobTitle">
-                    Job Id
+                    Job Title
                   </label>
                   <div className="input-group mb-3">
                     <input
@@ -222,14 +253,14 @@ function Openings() {
                       className="form-control"
                       type="text"
                       placeholder="Job Title"
-                      name="jobId"
+                      name="title"
                       value={job.title}
                       onChange={handleInputs}
                       required
                     />
                   </div>
                   <label className="form-label" htmlFor="companyJobDescription">
-                    Job Title
+                    Job Description
                   </label>
                   <div className="input-group mb-3">
                     <textarea

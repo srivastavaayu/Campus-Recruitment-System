@@ -21,6 +21,10 @@ const jobSchema = mongoose.Schema({
     createdAt:{
         type:"Date",
         default:Date.now()
+    },
+    archive:{
+        type:"Boolean",
+        default:"false"
     }
 
 });

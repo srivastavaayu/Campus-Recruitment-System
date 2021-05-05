@@ -45,6 +45,17 @@ router.post("/job", authentication, async (req, res) => {
 router.get("/jobopenings", async (req, res) => {
   console.log("Inside job open");
   try {
+    const jobopen = await Job.find({archive:false});
+    console.log(jobopen.length);
+    res.send(jobopen);
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+router.get("/alljobopenings", async (req, res) => {
+  console.log("Inside job open");
+  try {
     const jobopen = await Job.find({});
     console.log(jobopen.length);
     res.send(jobopen);
