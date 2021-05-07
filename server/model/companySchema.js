@@ -8,7 +8,6 @@ const companySchema = new mongoose.Schema({
     },
     name:{
         type: 'string',
-        required: true
     },
     password:{
         type: 'string',
@@ -16,19 +15,15 @@ const companySchema = new mongoose.Schema({
     },
     email:{
         type: 'string',
-        required: true
     },
     phone:{
         type:Number,
-        required: true
     },
     companyLink:{
         type: 'string',
-        required: true
     },
     companyDescription:{
         type: 'string',
-        required: true
     },
     address:{
         type: 'string',
@@ -39,6 +34,10 @@ const companySchema = new mongoose.Schema({
     role:{
         type: 'string',
         default: 'company'
+    },
+    accept:{
+        type:"Boolean",
+        default:"false"
     },
     tokens:[
         {

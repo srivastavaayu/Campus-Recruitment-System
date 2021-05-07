@@ -11,6 +11,115 @@ const Admin = require('../model/adminSchema');
 const authentication = require("../middleware/authentication");
 
 //signup
+router.post("/registerUser",async (req,res)=>{
+    console.log(req.body);
+    const member = req.body.member;
+    if(member=="Company"){
+        console.log("Inside Company");
+        const { userName,password,rpassword} = req.body;
+
+        if(!userName ||  !password || !rpassword){
+            return res.status(422).json({error : "Plz filled the details"});
+        }
+
+        try{
+            const companyExist = await Company.findOne({userName});
+            if(companyExist){
+                return res.status(422).json({message : "Already Company with this Username registered"});
+            }
+            if(password !== rpassword){
+                return res.status(422).json({message : "Both Password must be same"});
+            }
+            const company = new Company({userName,password});
+
+            // generate salt to hash password
+            const salt = await bcrypt.genSalt(12);
+            // now we set user password to hashed password
+            company.password = await bcrypt.hash(company.password, salt);
+    
+        
+            await company.save();
+
+            res.status(201).json({message : "Company registered successfully"});
+
+
+
+        }catch(err){
+            console.log(err);
+        }
+
+    }else if(member=="Student"){
+
+        console.log("Inside Student");
+        const { userName,password,rpassword} = req.body;
+
+        if(!userName ||  !password || !rpassword){
+            return res.status(422).json({error : "Plz filled the details"});
+        }
+
+        try{
+            const studentExist = await Student.findOne({userName});
+            if(studentExist){
+                return res.status(422).json({message : "Already Student with this Username registered"});
+            }
+            if(password !== rpassword){
+                return res.status(422).json({message : "Both Password must be same"});
+            }
+            const student = new Student({userName,password});
+
+            // generate salt to hash password
+            const salt = await bcrypt.genSalt(12);
+            // now we set user password to hashed password
+            student.password = await bcrypt.hash(student.password, salt);
+    
+        
+            await student.save();
+
+            res.status(201).json({message : "Student registered successfully"});
+
+
+
+        }catch(err){
+            console.log(err);
+        }
+    }else if(member=="Placement Coordinator"){
+
+        console.log("Inside Placement Coordinator");
+        const { userName,password,rpassword} = req.body;
+
+        if(!userName ||  !password || !rpassword){
+            return res.status(422).json({error : "Plz filled the details"});
+        }
+
+        try{
+            const placementExist = await Placement.findOne({userName});
+            if(placementExist){
+                return res.status(422).json({message : "Already Placement Coordinator with this Username registered"});
+            }
+            if(password !== rpassword){
+                return res.status(422).json({message : "Both Password must be same"});
+            }
+            const placement = new Placement({userName,password});
+
+            // generate salt to hash password
+            const salt = await bcrypt.genSalt(12);
+            // now we set user password to hashed password
+            placement.password = await bcrypt.hash(placement.password, salt);
+    
+        
+            await placement.save();
+
+            res.status(201).json({message : "Placement Coordinator registered successfully"});
+
+
+
+        }catch(err){
+            console.log(err);
+        }
+
+    }
+})
+
 router.post('/register',async (req,res)=>{
     //console.log(req.body.role);
     const role = req.body.role;
@@ -145,6 +254,10 @@ router.post('/login',async (req,res)=>{
         console.log(userName,password);
         try{
             const studentLogin = await Student.findOne({userName});
+            //console.log(!(studentLogin.accept));
+            if(!(studentLogin.accept)){
+                return res.status(402).json({meassage : "Once a Placement Coordinator or Admin will Verify You :)"});
+            }
             if(studentLogin){
                 const validPassword = await bcrypt.compare(password, studentLogin.password);
                 if(validPassword){
@@ -178,6 +291,9 @@ router.post('/login',async (req,res)=>{
         const {userName,password} = req.body;
         try{
             const placementLogin = await Placement.findOne({userName});
+            if(!(placementLogin.accept)){
+                return res.status(402).json({meassage : "Once a Admin will Verify You :)"});
+            }
             if(placementLogin){
                 const validPassword = await bcrypt.compare(password, placementLogin.password);
                 if(validPassword){
@@ -211,6 +327,9 @@ router.post('/login',async (req,res)=>{
         const {userName,password} = req.body;
         try{
             const companyLogin = await Company.findOne({userName});
+            if(!(companyLogin.accept)){
+                return res.status(402).json({meassage : "Once a Placement Coordinator or Admin will Verify You :)"});
+            }
             if(companyLogin){
                 const validPassword = await bcrypt.compare(password, companyLogin.password);
                 if(validPassword){
@@ -280,4 +399,33 @@ router.get("/userData",authentication,(req,res)=>{
     res.send(req.rootUser);
 });
 
+
+//manage Users
+
+router.get("/pendingUser",authentication,async (req,res)=>{
+    const role = req.rootUser.role;
+    console.log(role);
+    //res.send("listening");
+    const user = req.body.user;
+    console.log(user);
+    let users;
+    if (role =="placement"){
+        
+        if (user=="Student"){
+            users= await Student.find({accept:false});
+        }else if(user=="Company"){
+            users= await Company.find({accept:false});
+        }
+        
+    }else if(role=="admin"){
+        if (user=="Student"){
+            users= await Student.find({accept:false});
+        }else if(user=="Company"){
+            users= await Company.find({accept:false});
+        }else if(user=="Placement Coordinator"){
+            users = await Placement.find({accept:false});
+        }
+    }
+    res.send(users);
+});
 module.exports = router;

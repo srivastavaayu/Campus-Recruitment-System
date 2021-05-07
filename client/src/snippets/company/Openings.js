@@ -166,6 +166,7 @@ function Openings() {
     jobId: "",
     title: "",
     ctc: "",
+    description: "",
   });
 
   let name, value;
@@ -180,7 +181,7 @@ function Openings() {
   const addJob = async (e) => {
     e.preventDefault();
 
-    const { jobId, title, ctc } = job;
+    const { jobId, title, ctc,description } = job;
 
     try {
       const res = await fetch("/job", {
@@ -192,6 +193,7 @@ function Openings() {
           jobId,
           title,
           ctc,
+          description,
         }),
       });
 
@@ -268,7 +270,8 @@ function Openings() {
                       className="form-control"
                       type="text"
                       placeholder="Job Description"
-                      name="jobDescription"
+                      name="description"
+                      value={job.description}
                       onChange={handleInputs}
                       rows="4"
                       required

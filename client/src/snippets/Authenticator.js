@@ -47,6 +47,13 @@ function Authenticator(props) {
     userName: "",
     password: "",
   });
+
+  const [signUser, setSignUser] = useState({
+    member: "",
+    userName: "",
+    password: "",
+    rpassword :"",
+  });
   const [selectedValue, setSelectedValue] = useState();
   let name, value;
   const handleInputs = (e) => {
@@ -64,6 +71,60 @@ function Authenticator(props) {
     console.log(e.label);
     console.log(user.member);
   };
+
+  //sign up form
+
+  const handleChange1 = (e) => {
+    setSelectedValue(e.label);
+    name = "member";
+    value = e.label;
+    setSignUser({ ...user, [name]: value });
+    console.log(e.label);
+    console.log(user.member);
+  };
+
+  const handleInputs1 = (e) => {
+    console.log(e.target.value);
+    name = e.target.name;
+    value = e.target.value;
+
+    setSignUser({ ...signUser, [name]: value });
+  };
+  const random=(e)=>{
+    console.log("calling a function");
+  }
+
+  //register a user
+  const registerUser = async (e)=>{
+    e.preventDefault();
+    console.log(signUser);
+
+    const {member,userName,password,rpassword} = signUser;
+    try{
+      const res = await fetch("/registerUser",{
+        method: "POST",
+        headers:{ 
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          member,userName,password,rpassword
+        })
+      });
+
+      const data = await res.json();
+
+      if(res.status===201){
+        console.log(data.message);
+        window.alert(data.message);
+      }else{
+        console.log(data.message);
+        window.alert(data.message);
+      }
+
+    }catch(err){
+      console.log(err);
+    }
+  }
 
   const logIn = async (e) => {
     e.preventDefault();
@@ -229,7 +290,7 @@ function Authenticator(props) {
               name="member"
               value={data.find((obj) => obj.value === selectedValue)} // set selected value
               options={data} // set list of the data
-              onChange={handleChange} // assign onChange function
+              onChange={handleChange1} // assign onChange function
             />
           </div>
           <label className="form-label" htmlFor="InputRegisterUsername">
@@ -243,8 +304,8 @@ function Authenticator(props) {
               type="text"
               placeholder="Username"
               name="userName"
-              value={user.userName}
-              onChange={handleInputs}
+              value={signUser.userName}
+              onChange={handleInputs1}
               required
             />
           </div>
@@ -258,8 +319,8 @@ function Authenticator(props) {
               type="password"
               placeholder="Password"
               name="password"
-              value={user.password}
-              onChange={handleInputs}
+              value={signUser.password}
+              onChange={handleInputs1}
               required
             />
           </div>
@@ -273,9 +334,9 @@ function Authenticator(props) {
               className="form-control"
               type="password"
               placeholder="Re-enter Password"
-              name="reenterpassword"
-              value={user.reenterpassword}
-              onchange={handleInputs}
+              name="rpassword"
+              value={signUser.rpassword}
+              onChange={handleInputs1}
               required
             />
           </div>
@@ -289,7 +350,7 @@ function Authenticator(props) {
           </button>
           <button
             className="btn btn-success float-end"
-            onClick={logIn}
+            onClick={registerUser}
             type="submit"
           >
             Register

@@ -9,6 +9,10 @@ const jobSchema = mongoose.Schema({
         type:"String",
         required:true
     },
+    description:{
+        type:"String",
+        required:true
+    },
     ctc:{
         type:"String",
         default:"Not specify"

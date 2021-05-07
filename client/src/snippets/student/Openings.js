@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
+//import {Modal} from 'bootstrap';
+
 import Header from "./Header";
+
 
 function CurrentOpenings() {
   //Back end
   const [jobData, setJobData] = useState([]);
   const history = useHistory();
 
-  const callAboutPage = async () => {
+  const callAboutPage1 = async () => {
     try {
       const res = await fetch("/jobopenings", {
         method: "GET",
@@ -32,52 +35,119 @@ function CurrentOpenings() {
     }
   };
 
+  //student Data
+  const [userData,setUserData] = useState({});
+  const callAboutPage = async ()=>{
+    try{
+      const res = await fetch('/userData',{
+        method:"GET",
+        headers:{
+          Accept: "application/json",
+          "Content-Type": "application/json"
+          },
+          credentials:"include"
+      });
+
+      const data = await res.json();
+      console.log(data);
+      setUserData(data);
+            
+
+
+      if(!res.status ===200){
+        const error = new Error(res.error);
+          throw error;
+        }
+
+        }catch(err){
+            console.log(err);
+            history.push('');
+
+        }
+  }
+
+  const [jobInfo] = useState({
+    jobId:"",
+    creator:"",
+    title:"",
+    description:"",
+    companyDescription:"",
+  });
+
+  //companyDescription
+  const comapny = async ()=>{
+    const {creator} = jobInfo;
+    try{
+      const res = await fetch("/companyDescription", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          creator
+        }),
+      });
+
+      const data = await res.json();
+
+      if(res.status===202){
+        jobInfo.companyDescription = data.companyDescription;
+        console.log(jobInfo);
+      }else{
+        console.log(data.message);
+        window.alert(data.message);
+      }
+
+    }catch(err){
+      console.log(err);
+    }
+  }
+
+  const apply = async (e) =>{
+    const {jobId,creator,title,description,companyDescription} = jobInfo;
+    const {userName,name,email,phone,department}=userData;
+    
+    try{
+      const res = await fetch("/applyJob",{
+        method: "POST",
+        headers:{
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          jobId,creator,title,description,companyDescription,userName,name,email,phone,department
+        })
+      });
+    }catch(err){
+      console.log(err);
+    }
+  }
+
+  let name,value;
+  const archive = async (jobId,creatorName,title,description)=>{
+    name="creator";
+    value=creatorName;
+    //console.log(value);
+    jobInfo.creator=value;
+    jobInfo.jobId=jobId;
+    jobInfo.title=title;
+    jobInfo.description=description;
+    console.log(jobInfo);
+
+    await comapny();
+    //var myModal = new Modal(document.getElementById('studentViewJob'));
+    //myModal.toggle();
+  }
+
+
+
   useEffect(() => {
+    callAboutPage1();
     callAboutPage();
   }, []);
 
   return (
     <>
-      <table className="table align-middle">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Company Name</th>
-            <th>Job Title</th>
-            <th>View Job</th>
-          </tr>
-        </thead>
-        <tbody>
-          {jobData.map(({ creatorName, title }, id) => {
-            return (
-              <tr>
-                <td>{id + 1}</td>
-                <td>{creatorName}</td>
-                <td>{title}</td>
-                <td>
-                  <button
-                    className="btn btn-outline-primary"
-                    data-bs-toggle="modal"
-                    data-bs-target="#studentViewJob"
-                  >
-                    View Job
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </>
-  );
-}
-
-function Openings() {
-  return (
-    <>
-      <Header />
-      <main>
-        <div
+    <div
           className="modal fade"
           data-bs-backdrop="static"
           data-bs-keyboard="false"
@@ -104,6 +174,7 @@ function Openings() {
                     type="text"
                     placeholder="Company Name"
                     name="CompanyName"
+                    value={jobInfo.creator}
                   />
                 </div>
                 <label
@@ -119,6 +190,7 @@ function Openings() {
                     type="text"
                     placeholder="Company Description"
                     name="CompanyDescription"
+                    value={jobInfo.companyDescription}
                   />
                 </div>
                 <label className="form-label" htmlFor="studentViewJobJobID">
@@ -131,6 +203,7 @@ function Openings() {
                     type="text"
                     placeholder="Job ID"
                     name="JobID"
+                    value={jobInfo.jobId}
                   />
                 </div>
                 <label className="form-label" htmlFor="studentViewJobJobTitle">
@@ -143,6 +216,7 @@ function Openings() {
                     type="text"
                     placeholder="Job Title"
                     name="JobTitle"
+                    value={jobInfo.title}
                   />
                 </div>
                 <label
@@ -159,6 +233,7 @@ function Openings() {
                     placeholder="Job Description"
                     name="message"
                     rows="4"
+                    value={jobInfo.description}
                   />
                 </div>
               </div>
@@ -166,13 +241,54 @@ function Openings() {
                 <button className="btn btn-secondary" data-bs-dismiss="modal">
                   Close
                 </button>
-                <button type="button" className="btn btn-primary">
+                <button type="button" className="btn btn-primary" onClick={apply}>
                   Apply to this job
                 </button>
               </div>
             </div>
           </div>
         </div>
+      <table className="table align-middle">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Company Name</th>
+            <th>Job Title</th>
+            <th>View Job</th>
+          </tr>
+        </thead>
+        <tbody>
+          {jobData.map(({jobId, creatorName, title,description }, id) => {
+            return (
+              <tr>
+                <td>{id + 1}</td>
+                <td>{creatorName}</td>
+                <td>{title}</td>
+                <td>
+                  <button
+                    className="btn btn-outline-primary"
+                    data-bs-target="#studentViewJob"
+                    data-bs-toggle="modal"
+                    onClick={archive.bind(this,jobId,creatorName, title,description)}
+                  >
+                    View Job
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </>
+  );
+}
+
+function Openings() {
+  return (
+    <>
+      <Header />
+      <main>
+        
         <div className="text-center">
           <h2 id="webpageTitle">Openings</h2>
           <hr />

@@ -8,7 +8,8 @@ const adminSchema = mongoose.Schema({
     },
     name: {
         type: 'string',
-        required:'true'
+        required:'true',
+        default: 'none'
     },
     password: {
         type: 'string',
@@ -16,15 +17,21 @@ const adminSchema = mongoose.Schema({
     },
     email: {
         type: 'string',
-        required:'true'
+        required:'true',
+        default: 'none'
     },
     phone:{
         type: 'string',
-        required:'true'
+        required:'true',
+        default: 'none'
     },
     role: {
         type: 'string',
         default: 'admin'
+    },
+    accept:{
+        type:"Boolean",
+        default:"false"
     },
     tokens:[
         {

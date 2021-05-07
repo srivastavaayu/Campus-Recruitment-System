@@ -5,30 +5,28 @@ const  jwt = require('jsonwebtoken');
 const studentSchema = new mongoose.Schema({
     userName:{
         type: 'string',
-        required: true
+        required: true,
     },
     password:{
         type: 'string',
-        required: true
+        required: true,
     },
     name:{
         type: 'string',
-        required: true
+        
     },
     email:{
         type: 'string',
-        required: true
     },
     phone:{
         type:Number,
-        required:true,
+
     },
     address:{
         type:String,
     },
     department:{
         type:String,
-        required: true
     },
     portfolio:{
         type:'string'
@@ -39,6 +37,10 @@ const studentSchema = new mongoose.Schema({
     role:{
         type:'string',
         default:'student'
+    },
+    accept:{
+        type:"Boolean",
+        default:"false"
     },
     tokens:[
         {

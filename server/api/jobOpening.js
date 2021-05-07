@@ -11,10 +11,10 @@ router.post("/job", authentication, async (req, res) => {
   const rootUser = req.rootUser;
   //console.log(rootUser.role);
   if (rootUser.role === "company") {
-    const { jobId, title, ctc } = req.body;
-    console.log(jobId, title, ctc);
+    const { jobId, title, ctc,description } = req.body;
+    console.log(jobId, title, ctc,description);
 
-    if (!jobId || !title) {
+    if (!jobId || !title || !description) {
       return res.status(422).json({ error: "Plz filled the details" });
     }
     try {
@@ -27,9 +27,9 @@ router.post("/job", authentication, async (req, res) => {
       const creatorName = rootUser.name;
       let job;
       if (!ctc) {
-        job = new Job({ jobId, title, creatorName });
+        job = new Job({ jobId, title, creatorName,description });
       } else {
-        job = new Job({ jobId, title, ctc, creatorName });
+        job = new Job({ jobId, title, ctc, creatorName,description });
       }
 
       await job.save();

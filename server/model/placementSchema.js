@@ -8,7 +8,7 @@ const placementSchema = new mongoose.Schema({
     },
     name:{
         type: 'string',
-        required:'true'
+        
     },
     password:{
         type: 'string',
@@ -16,23 +16,23 @@ const placementSchema = new mongoose.Schema({
     },
     email:{
         type: 'string',
-        required:'true'
     },
     phone:{
         type:Number,
-        required:'true'
     },
     department:{
         type: 'string',
-        required:'true'
     },
     address:{
         type: 'string',
-        required:'true'
     },
     role:{
         type: 'string',
         default:'placement'
+    },
+    accept:{
+        type:"Boolean",
+        default:"false"
     },
     tokens:[
         {

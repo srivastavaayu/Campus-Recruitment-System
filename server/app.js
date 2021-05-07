@@ -19,6 +19,8 @@ app.use(require("./api/updateData"));
 app.use(require("./api/notification"));
 app.use(require("./api/password"));
 app.use(require("./api/jobArchive"));
+app.use(require("./api/company"));
+app.use(require("./api/application"));
 app.get("",(req,res)=>{
     res.send("hello user");
 });
