@@ -5,20 +5,18 @@ import Header from "./Header";
 
 function PendingCompanies() {
   //backend for pending Companies
-  const [companydata,setCompanyData] = useState([]);
+  const [companydata, setCompanyData] = useState([]);
 
   const callAboutPage = async () => {
     try {
       const res = await fetch("/newUserData", {
-        method: "GET",
+        method: "POST",
         headers: {
-          Accept: "application/json",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          user:"Company"
+          user: "Company",
         }),
-        credentials: "include",
       });
 
       const data = await res.json();
@@ -26,10 +24,10 @@ function PendingCompanies() {
       setCompanyData(data);
 
       console.log(companydata);
-    }catch(e){
+    } catch (e) {
       console.log(e);
     }
-  }
+  };
 
   useEffect(() => {
     callAboutPage();
@@ -37,9 +35,39 @@ function PendingCompanies() {
 
   return (
     <>
-      <h2 id="webpageTitle" className="text-center">
+      <h3 id="webpageTitle" className="text-center">
         Pending Companies
-      </h2>
+      </h3>
+      <table className="table align-middle">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Company Username</th>
+            <th>Company Name</th>
+            <th>Company E-mail</th>
+            <th>Approve</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {companydata.map(({ name, email, userName }, id) => {
+            return (
+              <tr>
+                <td>{id + 1}</td>
+                <td>{userName}</td>
+                <td>{name}</td>
+                <td>{email}</td>
+                <td>
+                  <button className="btn btn-outline-success">Approve</button>
+                </td>
+                <td>
+                  <button className="btn btn-outline-danger">Delete</button>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </>
   );
 }
@@ -47,30 +75,54 @@ function PendingCompanies() {
 function AllCompanies() {
   return (
     <>
-      <h2 id="webpageTitle" className="text-center">
+      <h3 id="webpageTitle" className="text-center">
         All Companies
-      </h2>
+      </h3>
+      <table className="table align-middle">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Company Username</th>
+            <th>Company Name</th>
+            <th>Company E-mail</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {companydata.map(({ name, email, userName }, id) => {
+            return (
+              <tr>
+                <td>{id + 1}</td>
+                <td>{userName}</td>
+                <td>{name}</td>
+                <td>{email}</td>
+                <td>
+                  <button className="btn btn-outline-danger">Delete</button>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </>
   );
 }
 
 function PendingStudents() {
-
   //backend for pending Students
-  const [studentdata,setStudentData] = useState([]);
+  console.log("Aayush");
+  const [studentdata, setStudentData] = useState([]);
 
   const callAboutPage = async () => {
     try {
       const res = await fetch("/newUserData", {
-        method: "GET",
+        method: "POST",
         headers: {
-          Accept: "application/json",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          user:"Student"
+          user: "Student",
         }),
-        credentials: "include",
       });
 
       const data = await res.json();
@@ -78,10 +130,10 @@ function PendingStudents() {
       setStudentData(data);
 
       console.log(studentdata);
-    }catch(e){
+    } catch (e) {
       console.log(e);
     }
-  }
+  };
 
   useEffect(() => {
     callAboutPage();
@@ -89,9 +141,37 @@ function PendingStudents() {
 
   return (
     <>
-      <h2 id="webpageTitle" className="text-center">
+      <h3 id="webpageTitle" className="text-center">
         Pending Students
-      </h2>
+      </h3>
+      <table className="table align-middle">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Student Enrollment Number</th>
+            <th>Student Name</th>
+            <th>Approve</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {studentdata.map(({ name, userName }, id) => {
+            return (
+              <tr>
+                <td>{id + 1}</td>
+                <td>{userName}</td>
+                <td>{name}</td>
+                <td>
+                  <button className="btn btn-outline-success">Approve</button>
+                </td>
+                <td>
+                  <button className="btn btn-outline-danger">Delete</button>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </>
   );
 }
@@ -99,72 +179,33 @@ function PendingStudents() {
 function AllStudents() {
   return (
     <>
-      <h2 id="webpageTitle" className="text-center">
+      <h3 id="webpageTitle" className="text-center">
         All Students
-      </h2>
-    </>
-  );
-}
-
-function PendingUsers() {
-  return (
-    <>
-      <table className="table">
+      </h3>
+      <table className="table align-middle">
         <thead>
           <tr>
             <th>#</th>
-            <th>Enrollment Number</th>
-            <th>Name</th>
-            <th>Approve</th>
+            <th>Student Enrollment Number</th>
+            <th>Student Name</th>
             <th>Delete</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>181B005</td>
-            <td>Aayush Srivastava</td>
-            <td>
-              <button className="btn btn-outline-success">Approve</button>
-            </td>
-            <td>
-              <button className="btn btn-outline-danger">Delete</button>
-            </td>
-          </tr>
+          {studentdata.map(({ name, userName }, id) => {
+            return (
+              <tr>
+                <td>{id + 1}</td>
+                <td>{userName}</td>
+                <td>{name}</td>
+                <td>
+                  <button className="btn btn-outline-danger">Delete</button>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
-    </>
-  );
-}
-function AllUsers() {
-  return (
-    <>
-      <>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Enrollment Number</th>
-              <th>Name</th>
-              <th>Approve</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>181B005</td>
-              <td>Aayush Srivastava</td>
-              <td>
-                <button className="btn btn-outline-success">Approve</button>
-              </td>
-              <td>
-                <button className="btn btn-outline-danger">Delete</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </>
     </>
   );
 }
@@ -191,6 +232,8 @@ function ManageUsers() {
               className="nav-link"
               to="/PlacementCoordinator/ManageUsers/Companies"
               onClick={() => setUserType("Companies")}
+              data-bs-toggle="tab"
+              data-bs-target="#ManageCompanies"
             >
               Companies
             </NavLink>
@@ -198,14 +241,22 @@ function ManageUsers() {
               className="nav-link"
               to="/PlacementCoordinator/ManageUsers/Students"
               onClick={() => setUserType("Students")}
+              data-bs-toggle="tab"
+              data-bs-target="#ManageStudents"
             >
               Students
             </NavLink>
           </nav>
-          <h3 className="text-center">Pending {userType}</h3>
-          <PendingUsers />
-          <h3 className="text-center">All {userType}</h3>
-          <AllUsers />
+          <div className="tab-content">
+            <div className="tab-pane fade show active" id="ManageCompanies">
+              <PendingCompanies />
+              <AllCompanies />
+            </div>
+            <div className="tab-pane fade" id="ManageStudents">
+              <PendingStudents />
+              <AllStudents />
+            </div>
+          </div>
         </div>
       </main>
     </>

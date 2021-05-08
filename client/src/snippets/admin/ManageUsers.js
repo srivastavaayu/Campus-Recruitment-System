@@ -3,61 +3,308 @@ import { Link, NavLink, useParams } from "react-router-dom";
 import "../../css/ManageUsers.css";
 import Header from "./Header";
 
-function PendingUsers() {
+function PendingPlacementCoordinators() {
+  //backend for pending Companies
+  const [companydata, setCompanyData] = useState([]);
+
+  const callAboutPage = async () => {
+    try {
+      const res = await fetch("/newUserData", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user: "Company",
+        }),
+      });
+
+      const data = await res.json();
+
+      setCompanyData(data);
+
+      console.log(companydata);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    callAboutPage();
+  }, []);
+
   return (
     <>
-      <table className="table">
+      <h3 id="webpageTitle" className="text-center">
+        Pending Placement Coordinators
+      </h3>
+      <table className="table align-middle">
         <thead>
           <tr>
             <th>#</th>
-            <th>Enrollment Number</th>
-            <th>Name</th>
+            <th>Placement Coordinator Username</th>
+            <th>Placement Coordinator Name</th>
             <th>Approve</th>
             <th>Delete</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>181B005</td>
-            <td>Aayush Srivastava</td>
-            <td>
-              <button className="btn btn-outline-success">Approve</button>
-            </td>
-            <td>
-              <button className="btn btn-outline-danger">Delete</button>
-            </td>
-          </tr>
+          {companydata.map(({ name, userName }, id) => {
+            return (
+              <tr>
+                <td>{id + 1}</td>
+                <td>{userName}</td>
+                <td>{name}</td>
+                <td>
+                  <button className="btn btn-outline-success">Approve</button>
+                </td>
+                <td>
+                  <button className="btn btn-outline-danger">Delete</button>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </>
   );
 }
-function AllUsers() {
+
+function AllPlacementCoordinators() {
   return (
     <>
-      <table className="table">
+      <h3 id="webpageTitle" className="text-center">
+        All Placement Coordinators
+      </h3>
+      <table className="table align-middle">
         <thead>
           <tr>
             <th>#</th>
-            <th>Enrollment Number</th>
-            <th>Name</th>
+            <th>Placement Coordinator Username</th>
+            <th>Placement Coordinator Name</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {companydata.map(({ name, userName }, id) => {
+            return (
+              <tr>
+                <td>{id + 1}</td>
+                <td>{userName}</td>
+                <td>{name}</td>
+                <td>
+                  <button className="btn btn-outline-danger">Delete</button>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </>
+  );
+}
+
+function PendingCompanies() {
+  //backend for pending Companies
+  const [companydata, setCompanyData] = useState([]);
+
+  const callAboutPage = async () => {
+    try {
+      const res = await fetch("/newUserData", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user: "Company",
+        }),
+      });
+
+      const data = await res.json();
+
+      setCompanyData(data);
+
+      console.log(companydata);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    callAboutPage();
+  }, []);
+
+  return (
+    <>
+      <h3 id="webpageTitle" className="text-center">
+        Pending Companies
+      </h3>
+      <table className="table align-middle">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Company Username</th>
+            <th>Company Name</th>
+            <th>Company E-mail</th>
             <th>Approve</th>
             <th>Delete</th>
           </tr>
         </thead>
         <tbody>
+          {companydata.map(({ name, email, userName }, id) => {
+            return (
+              <tr>
+                <td>{id + 1}</td>
+                <td>{userName}</td>
+                <td>{name}</td>
+                <td>{email}</td>
+                <td>
+                  <button className="btn btn-outline-success">Approve</button>
+                </td>
+                <td>
+                  <button className="btn btn-outline-danger">Delete</button>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </>
+  );
+}
+
+function AllCompanies() {
+  return (
+    <>
+      <h3 id="webpageTitle" className="text-center">
+        All Companies
+      </h3>
+      <table className="table align-middle">
+        <thead>
           <tr>
-            <td>1</td>
-            <td>181B005</td>
-            <td>Aayush Srivastava</td>
-            <td>
-              <button className="btn btn-outline-success">Approve</button>
-            </td>
-            <td>
-              <button className="btn btn-outline-danger">Delete</button>
-            </td>
+            <th>#</th>
+            <th>Company Username</th>
+            <th>Company Name</th>
+            <th>Company E-mail</th>
+            <th>Delete</th>
           </tr>
+        </thead>
+        <tbody>
+          {companydata.map(({ name, email, userName }, id) => {
+            return (
+              <tr>
+                <td>{id + 1}</td>
+                <td>{userName}</td>
+                <td>{name}</td>
+                <td>{email}</td>
+                <td>
+                  <button className="btn btn-outline-danger">Delete</button>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </>
+  );
+}
+
+function PendingStudents() {
+  //backend for pending Students
+  console.log("Aayush");
+  const [studentdata, setStudentData] = useState([]);
+
+  const callAboutPage = async () => {
+    try {
+      const res = await fetch("/newUserData", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user: "Student",
+        }),
+      });
+
+      const data = await res.json();
+
+      setStudentData(data);
+
+      console.log(studentdata);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    callAboutPage();
+  }, []);
+
+  return (
+    <>
+      <h3 id="webpageTitle" className="text-center">
+        Pending Students
+      </h3>
+      <table className="table align-middle">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Student Enrollment Number</th>
+            <th>Student Name</th>
+            <th>Approve</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {studentdata.map(({ name, userName }, id) => {
+            return (
+              <tr>
+                <td>{id + 1}</td>
+                <td>{userName}</td>
+                <td>{name}</td>
+                <td>
+                  <button className="btn btn-outline-success">Approve</button>
+                </td>
+                <td>
+                  <button className="btn btn-outline-danger">Delete</button>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </>
+  );
+}
+
+function AllStudents() {
+  return (
+    <>
+      <h3 id="webpageTitle" className="text-center">
+        All Students
+      </h3>
+      <table className="table align-middle">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Student Enrollment Number</th>
+            <th>Student Name</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {studentdata.map(({ name, userName }, id) => {
+            return (
+              <tr>
+                <td>{id + 1}</td>
+                <td>{userName}</td>
+                <td>{name}</td>
+                <td>
+                  <button className="btn btn-outline-danger">Delete</button>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </>
@@ -91,6 +338,8 @@ function ManageUsers() {
               className="nav-link"
               to="/Admin/ManageUsers/PlacementCoordinators"
               onClick={() => setUserType("PlacementCoordinators")}
+              data-bs-toggle="tab"
+              data-bs-target="#ManagePlacementCoordinators"
             >
               Placement Coordinators
             </NavLink>
@@ -98,6 +347,8 @@ function ManageUsers() {
               className="nav-link"
               to="/Admin/ManageUsers/Companies"
               onClick={() => setUserType("Companies")}
+              data-bs-toggle="tab"
+              data-bs-target="#ManageCompanies"
             >
               Companies
             </NavLink>
@@ -105,14 +356,29 @@ function ManageUsers() {
               className="nav-link"
               to="/Admin/ManageUsers/Students"
               onClick={() => setUserType("Students")}
+              data-bs-toggle="tab"
+              data-bs-target="#ManageStudents"
             >
               Students
             </NavLink>
           </nav>
-          <h3 className="text-center">Pending {userType}</h3>
-          <PendingUsers />
-          <h3 className="text-center">All {userType}</h3>
-          <AllUsers />
+          <div className="tab-content">
+            <div
+              className="tab-pane fade show active"
+              id="ManagePlacementCoordinators"
+            >
+              <PendingPlacementCoordinators />
+              <AllPlacementCoordinators />
+            </div>
+            <div className="tab-pane fade" id="ManageCompanies">
+              <PendingCompanies />
+              <AllCompanies />
+            </div>
+            <div className="tab-pane fade" id="ManageStudents">
+              <PendingStudents />
+              <AllStudents />
+            </div>
+          </div>
         </div>
       </main>
     </>
