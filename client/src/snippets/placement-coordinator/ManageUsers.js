@@ -3,6 +3,46 @@ import { Link, NavLink, useParams } from "react-router-dom";
 import "../../css/ManageUsers.css";
 import Header from "./Header";
 
+function PendingCompanies() {
+  return (
+    <>
+      <h2 id="webpageTitle" className="text-center">
+        Pending Companies
+      </h2>
+    </>
+  );
+}
+
+function AllCompanies() {
+  return (
+    <>
+      <h2 id="webpageTitle" className="text-center">
+        All Companies
+      </h2>
+    </>
+  );
+}
+
+function PendingStudents() {
+  return (
+    <>
+      <h2 id="webpageTitle" className="text-center">
+        Pending Students
+      </h2>
+    </>
+  );
+}
+
+function AllStudents() {
+  return (
+    <>
+      <h2 id="webpageTitle" className="text-center">
+        All Students
+      </h2>
+    </>
+  );
+}
+
 function PendingUsers() {
   return (
     <>
