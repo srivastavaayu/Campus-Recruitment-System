@@ -21,6 +21,7 @@ app.use(require("./api/password"));
 app.use(require("./api/jobArchive"));
 app.use(require("./api/company"));
 app.use(require("./api/application"));
+app.use(require("./api/verification"));
 app.get("",(req,res)=>{
     res.send("hello user");
 });

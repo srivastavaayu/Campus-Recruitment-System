@@ -4,6 +4,37 @@ import "../../css/ManageUsers.css";
 import Header from "./Header";
 
 function PendingCompanies() {
+  //backend for pending Companies
+  const [companydata,setCompanyData] = useState([]);
+
+  const callAboutPage = async () => {
+    try {
+      const res = await fetch("/newUserData", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user:"Company"
+        }),
+        credentials: "include",
+      });
+
+      const data = await res.json();
+
+      setCompanyData(data);
+
+      console.log(companydata);
+    }catch(e){
+      console.log(e);
+    }
+  }
+
+  useEffect(() => {
+    callAboutPage();
+  }, []);
+
   return (
     <>
       <h2 id="webpageTitle" className="text-center">
@@ -24,6 +55,38 @@ function AllCompanies() {
 }
 
 function PendingStudents() {
+
+  //backend for pending Students
+  const [studentdata,setStudentData] = useState([]);
+
+  const callAboutPage = async () => {
+    try {
+      const res = await fetch("/newUserData", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user:"Student"
+        }),
+        credentials: "include",
+      });
+
+      const data = await res.json();
+
+      setStudentData(data);
+
+      console.log(studentdata);
+    }catch(e){
+      console.log(e);
+    }
+  }
+
+  useEffect(() => {
+    callAboutPage();
+  }, []);
+
   return (
     <>
       <h2 id="webpageTitle" className="text-center">

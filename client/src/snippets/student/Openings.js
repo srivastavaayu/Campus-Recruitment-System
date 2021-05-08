@@ -69,8 +69,8 @@ function CurrentOpenings() {
   });
 
   //companyDescription
-  const comapny = async () => {
-    const { creator } = jobInfo;
+  const comapny = async (value) => {
+    const creator  = value;
     try {
       const res = await fetch("/companyDescription", {
         method: "POST",
@@ -133,6 +133,7 @@ function CurrentOpenings() {
     jobInfo.title = title;
     jobInfo.description = description;
     console.log(jobInfo);*/
+    await comapny(value);
     setJobInfo({
       creator: value,
       jobId: jobId,
@@ -140,7 +141,7 @@ function CurrentOpenings() {
       description: description,
     });
 
-    await comapny();
+    
   };
 
   useEffect(() => {
