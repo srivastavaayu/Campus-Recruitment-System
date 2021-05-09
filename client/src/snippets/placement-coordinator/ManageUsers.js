@@ -29,6 +29,68 @@ function PendingCompanies() {
     }
   };
 
+  const approve = async (userName,name)=>{
+    //console.log("Inside Pending Companies Approve Functions");
+    //console.log(userName,name);
+
+    const user = "Company";
+
+    try{
+      const res = await fetch("/verifyUser",{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user,userName,name
+        }),
+      });
+
+      const data = await res.json();
+
+      if (res.status===202){
+        console.log(data.message);
+        window.alert(data.message);
+      }else{
+        console.log(data.message);
+        window.alert(data.message);
+      }
+    }catch(err){
+      console.log(err);
+    }
+  }
+
+  const deleteUser = async (userName,name)=>{
+    //console.log("Inside Pending Companies Delete Functions");
+    //console.log(userName,name);
+
+    const user="Company";
+
+    try{
+      const res = await fetch("/deleteUsers",{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user,userName,name
+        }),
+      });
+
+      const data = await res.json();
+
+      if (res.status===202){
+        console.log(data.message);
+        window.alert(data.message);
+      }else{
+        console.log(data.message);
+        window.alert(data.message);
+      }
+    }catch(err){
+      console.log(err);
+    }
+  }
+
   useEffect(() => {
     callAboutPage();
   }, []);
@@ -58,10 +120,14 @@ function PendingCompanies() {
                 <td>{name}</td>
                 <td>{email}</td>
                 <td>
-                  <button className="btn btn-outline-success">Approve</button>
+                  <button className="btn btn-outline-success"
+                    onClick={approve.bind(this,userName,name)}
+                  >Approve</button>
                 </td>
                 <td>
-                  <button className="btn btn-outline-danger">Delete</button>
+                  <button className="btn btn-outline-danger"
+                    onClick={deleteUser.bind(this,userName,name)}
+                  >Delete</button>
                 </td>
               </tr>
             );
@@ -73,6 +139,68 @@ function PendingCompanies() {
 }
 
 function AllCompanies() {
+  
+  //backend for all Companies
+  const [companydata, setCompanyData] = useState([]);
+
+  const callAboutPage = async () => {
+    try {
+      const res = await fetch("/verifyUserData", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user: "Company",
+        }),
+      });
+
+      const data = await res.json();
+
+      setCompanyData(data);
+
+      console.log(companydata);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  //delete company
+  const deleteUser = async (userName,name)=>{
+    //console.log("Inside Pending Companies Delete Functions");
+    //console.log(userName,name);
+
+    const user="Company";
+
+    try{
+      const res = await fetch("/deleteUsers",{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user,userName,name
+        }),
+      });
+
+      const data = await res.json();
+
+      if (res.status===202){
+        console.log(data.message);
+        window.alert(data.message);
+      }else{
+        console.log(data.message);
+        window.alert(data.message);
+      }
+    }catch(err){
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    callAboutPage();
+  }, []);
+
   return (
     <>
       <h3 id="webpageTitle" className="text-center">
@@ -97,7 +225,9 @@ function AllCompanies() {
                 <td>{name}</td>
                 <td>{email}</td>
                 <td>
-                  <button className="btn btn-outline-danger">Delete</button>
+                  <button className="btn btn-outline-danger"
+                    onClick={deleteUser.bind(this,userName,name)}
+                  >Delete</button>
                 </td>
               </tr>
             );
@@ -110,7 +240,6 @@ function AllCompanies() {
 
 function PendingStudents() {
   //backend for pending Students
-  console.log("Aayush");
   const [studentdata, setStudentData] = useState([]);
 
   const callAboutPage = async () => {
@@ -135,6 +264,69 @@ function PendingStudents() {
     }
   };
 
+  const approve = async (userName,name)=>{
+    //console.log("Inside Pending Students Approve Functions");
+    //console.log(userName,name);
+
+    const user="Student";
+
+    try{
+      const res = await fetch("/verifyUser",{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user,userName,name
+        }),
+      });
+
+      const data = await res.json();
+
+      if (res.status===202){
+        console.log(data.message);
+        window.alert(data.message);
+      }else{
+        console.log(data.message);
+        window.alert(data.message);
+      }
+    }catch(err){
+      console.log(err);
+    }
+  }
+
+  const deleteUser = async (userName,name)=>{
+    //console.log("Inside Pending Students Delete Functions");
+    //console.log(userName,name);
+
+    const user="Student";
+
+    try{
+      const res = await fetch("/deleteUsers",{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user,userName,name
+        }),
+      });
+
+      const data = await res.json();
+
+      if (res.status===202){
+        console.log(data.message);
+        window.alert(data.message);
+      }else{
+        console.log(data.message);
+        window.alert(data.message);
+      }
+    }catch(err){
+      console.log(err);
+    }
+
+  }
+
   useEffect(() => {
     callAboutPage();
   }, []);
@@ -148,7 +340,7 @@ function PendingStudents() {
         <thead>
           <tr>
             <th>#</th>
-            <th>Student Enrollment Number</th>
+            <th>Student Username</th>
             <th>Student Name</th>
             <th>Approve</th>
             <th>Delete</th>
@@ -162,10 +354,14 @@ function PendingStudents() {
                 <td>{userName}</td>
                 <td>{name}</td>
                 <td>
-                  <button className="btn btn-outline-success">Approve</button>
+                  <button className="btn btn-outline-success" 
+                  onClick = {approve.bind(this,userName,name)}>
+                    Approve</button>
                 </td>
                 <td>
-                  <button className="btn btn-outline-danger">Delete</button>
+                  <button className="btn btn-outline-danger"
+                    onClick={deleteUser.bind(this,userName,name)}
+                  >Delete</button>
                 </td>
               </tr>
             );
@@ -177,6 +373,69 @@ function PendingStudents() {
 }
 
 function AllStudents() {
+
+  //backend for all Students
+  const [studentdata, setStudentData] = useState([]);
+
+  const callAboutPage = async () => {
+    try {
+      const res = await fetch("/verifyUserData", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user: "Student",
+        }),
+      });
+
+      const data = await res.json();
+
+      setStudentData(data);
+
+      console.log(studentdata);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  //backend Code for delete Students
+  const deleteUser = async (userName,name)=>{
+    //console.log("Inside Pending Students Delete Functions");
+    //console.log(userName,name);
+
+    const user="Student";
+
+    try{
+      const res = await fetch("/deleteUsers",{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user,userName,name
+        }),
+      });
+
+      const data = await res.json();
+
+      if (res.status===202){
+        console.log(data.message);
+        window.alert(data.message);
+      }else{
+        console.log(data.message);
+        window.alert(data.message);
+      }
+    }catch(err){
+      console.log(err);
+    }
+
+  }
+
+  useEffect(() => {
+    callAboutPage();
+  }, []);
+
   return (
     <>
       <h3 id="webpageTitle" className="text-center">
@@ -186,7 +445,7 @@ function AllStudents() {
         <thead>
           <tr>
             <th>#</th>
-            <th>Student Enrollment Number</th>
+            <th>Student UserName</th>
             <th>Student Name</th>
             <th>Delete</th>
           </tr>
@@ -199,7 +458,9 @@ function AllStudents() {
                 <td>{userName}</td>
                 <td>{name}</td>
                 <td>
-                  <button className="btn btn-outline-danger">Delete</button>
+                  <button className="btn btn-outline-danger"
+                    onClick={deleteUser.bind(this,userName,name)}
+                  >Delete</button>
                 </td>
               </tr>
             );

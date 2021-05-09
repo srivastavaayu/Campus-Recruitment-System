@@ -15,7 +15,7 @@ function PendingPlacementCoordinators() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          user: "Company",
+          user: "Placement Coordinator",
         }),
       });
 
@@ -71,6 +71,36 @@ function PendingPlacementCoordinators() {
 }
 
 function AllPlacementCoordinators() {
+
+  //backend for pending Companies
+  const [companydata, setCompanyData] = useState([]);
+
+  const callAboutPage = async () => {
+    try {
+      const res = await fetch("/verifyUserData", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user: "Placement Coordinator",
+        }),
+      });
+
+      const data = await res.json();
+
+      setCompanyData(data);
+
+      console.log(companydata);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    callAboutPage();
+  }, []);
+
   return (
     <>
       <h3 id="webpageTitle" className="text-center">
@@ -174,6 +204,35 @@ function PendingCompanies() {
 }
 
 function AllCompanies() {
+  //backend for pending Companies
+  const [companydata, setCompanyData] = useState([]);
+
+  const callAboutPage = async () => {
+    try {
+      const res = await fetch("/verifyUserData", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user: "Company",
+        }),
+      });
+
+      const data = await res.json();
+
+      setCompanyData(data);
+
+      console.log(companydata);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    callAboutPage();
+  }, []);
+
   return (
     <>
       <h3 id="webpageTitle" className="text-center">
@@ -211,7 +270,6 @@ function AllCompanies() {
 
 function PendingStudents() {
   //backend for pending Students
-  console.log("Aayush");
   const [studentdata, setStudentData] = useState([]);
 
   const callAboutPage = async () => {
@@ -278,6 +336,36 @@ function PendingStudents() {
 }
 
 function AllStudents() {
+
+  //backend for pending Students
+  const [studentdata, setStudentData] = useState([]);
+
+  const callAboutPage = async () => {
+    try {
+      const res = await fetch("/verifyUserData", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user: "Student",
+        }),
+      });
+
+      const data = await res.json();
+
+      setStudentData(data);
+
+      console.log(studentdata);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    callAboutPage();
+  }, []);
+  
   return (
     <>
       <h3 id="webpageTitle" className="text-center">
