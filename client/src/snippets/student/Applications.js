@@ -1,7 +1,32 @@
-import React from "react";
+import React,{ useEffect, useState } from "react";
 import Header from "./Header";
 
 function CurrentApplications() {
+
+  //backend for current applications
+  const [applicants,setApplicants] = useState([]);
+
+  const callAboutPage = async () => {
+
+    const res = await fetch("/studentJob",{
+      method: "GET",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+      },
+      credentials: "include"
+    });
+
+    const data = await res.json();
+    console.log(data);
+    setApplicants(data);
+    console.log(applicants);
+  }
+
+  useEffect(() => {
+    callAboutPage();
+  }, []);
+
   return (
     <>
       <table className="table align-middle">
