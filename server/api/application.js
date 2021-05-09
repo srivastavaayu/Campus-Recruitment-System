@@ -62,4 +62,21 @@ router.get("/companyJob",authentication, async (req, res)=>{
         console.log(err);
     }
 })
+
+//companyUpdate data
+router.post("/updateJobStatus",authentication, async (req, res)=>{
+    const member = req.rootUser.role;
+    if(member=="company"){
+        //console.log(req.body);
+        const {userName,jobId,status} = req.body;
+
+        const result = await Application.updateOne({userName,jobId},{$set:{applicationStatus:status}});
+
+        if(result){
+            return res.status(202).json({message: "Status Update Successful"});
+        }else{
+            return res.status(502).json({message: "Database Failure"});
+        }
+    }
+})
 module.exports = router;

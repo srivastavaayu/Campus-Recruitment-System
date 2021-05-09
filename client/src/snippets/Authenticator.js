@@ -51,6 +51,8 @@ function Authenticator(props) {
   const [signUser, setSignUser] = useState({
     member: "",
     userName: "",
+    name:"",
+    email:"",
     password: "",
     rpassword: "",
   });
@@ -99,7 +101,7 @@ function Authenticator(props) {
     e.preventDefault();
     console.log(signUser);
 
-    const { member, userName, password, rpassword } = signUser;
+    const { member, userName,name,email, password, rpassword } = signUser;
     try {
       const res = await fetch("/registerUser", {
         method: "POST",
@@ -109,6 +111,8 @@ function Authenticator(props) {
         body: JSON.stringify({
           member,
           userName,
+          name,
+          email,
           password,
           rpassword,
         }),
@@ -161,8 +165,8 @@ function Authenticator(props) {
           history.push("/Admin/Home");
         }
       } else {
-        console.log("Invalid Credantials");
-        window.alert("Invalid Credantials");
+        console.log(data.message);
+        window.alert(data.message);
       }
     } catch (e) {
       console.log("Error");
@@ -322,7 +326,7 @@ function Authenticator(props) {
               type="text"
               placeholder="Name"
               name="name"
-              value={signUser.userName}
+              value={signUser.name}
               onChange={handleInputs1}
               required
             />
@@ -336,8 +340,8 @@ function Authenticator(props) {
               className="form-control"
               type="email"
               placeholder="Email"
-              name="userEmail"
-              value={signUser.userName}
+              name="email"
+              value={signUser.email}
               onChange={handleInputs1}
               required
             />

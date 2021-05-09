@@ -97,6 +97,7 @@ function CurrentOpenings() {
   };
 
   const apply = async (e) => {
+    console.log("in apply");
     const { jobId, creator, title, description, companyDescription } = jobInfo;
     const { userName, name, email, phone, department } = userData;
 
@@ -119,6 +120,10 @@ function CurrentOpenings() {
           department,
         }),
       });
+
+      const data = await res.json();
+      console.log(data.message);
+      window.alert(data.message);
     } catch (err) {
       console.log(err);
     }

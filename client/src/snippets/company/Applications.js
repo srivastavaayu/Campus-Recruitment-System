@@ -15,8 +15,29 @@ function ApplicationStatus(props) {
   }
 }
 
-const sendStatusToBackend = (userName, jobId, status) => {
-  console.log("Status is " + status, userName, jobId);
+const sendStatusToBackend = async (userName, jobId, status) => {
+  //console.log("Status is " + status, userName, jobId);
+  try{
+      const res = await fetch("/updateJobStatus",{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          userName, jobId, status
+        })
+      });
+      const data = await res.json();
+      if(res.status===202){
+        console.log(data.message);
+        window.alert(data.message);
+      }else{
+        console.log(data.message);
+        window.alert(data.message);
+      }
+  }catch(err){
+    console.log(err);
+  }
 };
 
 const sendStatus = (userName, jobId) => {

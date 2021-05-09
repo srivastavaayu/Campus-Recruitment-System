@@ -16,9 +16,9 @@ router.post("/registerUser",async (req,res)=>{
     const member = req.body.member;
     if(member=="Company"){
         console.log("Inside Company");
-        const { userName,password,rpassword} = req.body;
+        const { userName,password,rpassword,name,email} = req.body;
 
-        if(!userName ||  !password || !rpassword){
+        if(!userName ||  !password || !rpassword || !name || !email){
             return res.status(422).json({error : "Plz filled the details"});
         }
 
@@ -30,7 +30,7 @@ router.post("/registerUser",async (req,res)=>{
             if(password !== rpassword){
                 return res.status(422).json({message : "Both Password must be same"});
             }
-            const company = new Company({userName,password});
+            const company = new Company({userName,password,name,email});
 
             // generate salt to hash password
             const salt = await bcrypt.genSalt(12);
@@ -51,9 +51,9 @@ router.post("/registerUser",async (req,res)=>{
     }else if(member=="Student"){
 
         console.log("Inside Student");
-        const { userName,password,rpassword} = req.body;
+        const { userName,password,rpassword,name,email} = req.body;
 
-        if(!userName ||  !password || !rpassword){
+        if(!userName ||  !password || !rpassword || !name || !email){
             return res.status(422).json({error : "Plz filled the details"});
         }
 
@@ -65,7 +65,7 @@ router.post("/registerUser",async (req,res)=>{
             if(password !== rpassword){
                 return res.status(422).json({message : "Both Password must be same"});
             }
-            const student = new Student({userName,password});
+            const student = new Student({userName,password,name,email});
 
             // generate salt to hash password
             const salt = await bcrypt.genSalt(12);
@@ -85,9 +85,9 @@ router.post("/registerUser",async (req,res)=>{
     }else if(member=="Placement Coordinator"){
 
         console.log("Inside Placement Coordinator");
-        const { userName,password,rpassword} = req.body;
+        const { userName,password,rpassword,name,email} = req.body;
 
-        if(!userName ||  !password || !rpassword){
+        if(!userName ||  !password || !rpassword  || !name || !email){
             return res.status(422).json({error : "Plz filled the details"});
         }
 
@@ -99,7 +99,7 @@ router.post("/registerUser",async (req,res)=>{
             if(password !== rpassword){
                 return res.status(422).json({message : "Both Password must be same"});
             }
-            const placement = new Placement({userName,password});
+            const placement = new Placement({userName,password,name,email});
 
             // generate salt to hash password
             const salt = await bcrypt.genSalt(12);
@@ -255,10 +255,10 @@ router.post('/login',async (req,res)=>{
         try{
             const studentLogin = await Student.findOne({userName});
             //console.log(!(studentLogin.accept));
-            if(!(studentLogin.accept)){
-                return res.status(402).json({meassage : "Once a Placement Coordinator or Admin will Verify You :)"});
-            }
             if(studentLogin){
+                if(!(studentLogin.accept)){
+                    return res.status(402).json({message : "Once a Placement Coordinator or Admin will Verify You :)"});
+                }
                 const validPassword = await bcrypt.compare(password, studentLogin.password);
                 if(validPassword){
 
@@ -276,12 +276,12 @@ router.post('/login',async (req,res)=>{
                         httpOnly:true
                         });
                         
-                    return res.status(202).json({meassage : studentLogin});
+                    return res.status(202).json({message : studentLogin});
                 }else{
-                    return res.status(402).json({meassage : "Invalid Credantials"});
+                    return res.status(402).json({message : "Invalid Credantials"});
                 }
             }else{
-                return res.status(402).json({meassage : "Invalid Credantials"});
+                return res.status(402).json({message : "UserName does not exist"});
             }
         }catch(err){
             console.log(err);
@@ -291,10 +291,11 @@ router.post('/login',async (req,res)=>{
         const {userName,password} = req.body;
         try{
             const placementLogin = await Placement.findOne({userName});
-            if(!(placementLogin.accept)){
-                return res.status(402).json({meassage : "Once a Admin will Verify You :)"});
-            }
+            
             if(placementLogin){
+                if(!(placementLogin.accept)){
+                    return res.status(402).json({message : "Once a Admin will Verify You :)"});
+                }
                 const validPassword = await bcrypt.compare(password, placementLogin.password);
                 if(validPassword){
 
@@ -312,12 +313,12 @@ router.post('/login',async (req,res)=>{
                         httpOnly:true
                         });
 
-                    return res.status(202).json({meassage : placementLogin});
+                    return res.status(202).json({message : placementLogin});
                 }else{
-                    return res.status(402).json({meassage : "Invalid Credantials"});
+                    return res.status(402).json({message : "Invalid Credantials"});
                 }
             }else{
-                return res.status(402).json({meassage : "Invalid Credantials"});
+                return res.status(402).json({message : "UserName does not exist"});
             }
         }catch(err){
             console.log(err);
@@ -327,10 +328,11 @@ router.post('/login',async (req,res)=>{
         const {userName,password} = req.body;
         try{
             const companyLogin = await Company.findOne({userName});
-            if(!(companyLogin.accept)){
-                return res.status(402).json({meassage : "Once a Placement Coordinator or Admin will Verify You :)"});
-            }
+            
             if(companyLogin){
+                if(!(companyLogin.accept)){
+                    return res.status(402).json({message : "Once a Placement Coordinator or Admin will Verify You :)"});
+                }
                 const validPassword = await bcrypt.compare(password, companyLogin.password);
                 if(validPassword){
 
@@ -347,12 +349,12 @@ router.post('/login',async (req,res)=>{
                         httpOnly:true
                         });
 
-                    return res.status(202).json({meassage : companyLogin});
+                    return res.status(202).json({message : companyLogin});
                 }else{
-                    return res.status(402).json({meassage : "Invalid Credantials"});
+                    return res.status(402).json({message : "Invalid Credantials"});
                 }
             }else{
-                return res.status(402).json({meassage : "Invalid Credantials"});
+                return res.status(402).json({message : "UserName does not exist"});
             }
         }catch(err){
             console.log(err);
@@ -385,7 +387,7 @@ router.post('/login',async (req,res)=>{
                     return res.status(402).json({meassage : "Invalid Credantials"});
                 }
             }else{
-                return res.status(402).json({meassage : "Invalid Credantials"});
+                return res.status(402).json({meassage : "UserName does not exist"});
             }
         }catch(err){
             console.log(err);
