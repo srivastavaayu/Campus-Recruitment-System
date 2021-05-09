@@ -52,7 +52,7 @@ function Authenticator(props) {
     member: "",
     userName: "",
     password: "",
-    rpassword :"",
+    rpassword: "",
   });
   const [selectedValue, setSelectedValue] = useState();
   let name, value;
@@ -90,41 +90,43 @@ function Authenticator(props) {
 
     setSignUser({ ...signUser, [name]: value });
   };
-  const random=(e)=>{
+  const random = (e) => {
     console.log("calling a function");
-  }
+  };
 
   //register a user
-  const registerUser = async (e)=>{
+  const registerUser = async (e) => {
     e.preventDefault();
     console.log(signUser);
 
-    const {member,userName,password,rpassword} = signUser;
-    try{
-      const res = await fetch("/registerUser",{
+    const { member, userName, password, rpassword } = signUser;
+    try {
+      const res = await fetch("/registerUser", {
         method: "POST",
-        headers:{ 
+        headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          member,userName,password,rpassword
-        })
+          member,
+          userName,
+          password,
+          rpassword,
+        }),
       });
 
       const data = await res.json();
 
-      if(res.status===201){
+      if (res.status === 201) {
         console.log(data.message);
         window.alert(data.message);
-      }else{
+      } else {
         console.log(data.message);
         window.alert(data.message);
       }
-
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   const logIn = async (e) => {
     e.preventDefault();
@@ -293,6 +295,7 @@ function Authenticator(props) {
               onChange={handleChange1} // assign onChange function
             />
           </div>
+
           <label className="form-label" htmlFor="InputRegisterUsername">
             Username
           </label>
@@ -304,6 +307,36 @@ function Authenticator(props) {
               type="text"
               placeholder="Username"
               name="userName"
+              value={signUser.userName}
+              onChange={handleInputs1}
+              required
+            />
+          </div>
+          <label className="form-label" htmlFor="InputRegisterName">
+            Name
+          </label>
+          <div className="mb-3">
+            <input
+              id="InputRegisterName"
+              className="form-control"
+              type="text"
+              placeholder="Name"
+              name="name"
+              value={signUser.userName}
+              onChange={handleInputs1}
+              required
+            />
+          </div>
+          <label className="form-label" htmlFor="InputRegisterEmail">
+            Email
+          </label>
+          <div className="mb-3">
+            <input
+              id="InputRegisterEmail"
+              className="form-control"
+              type="email"
+              placeholder="Email"
+              name="userEmail"
               value={signUser.userName}
               onChange={handleInputs1}
               required

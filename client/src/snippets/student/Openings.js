@@ -70,7 +70,7 @@ function CurrentOpenings() {
 
   //companyDescription
   const comapny = async (value) => {
-    const creator  = value;
+    const creator = value;
     try {
       const res = await fetch("/companyDescription", {
         method: "POST",
@@ -140,8 +140,6 @@ function CurrentOpenings() {
       title: title,
       description: description,
     });
-
-    
   };
 
   useEffect(() => {
