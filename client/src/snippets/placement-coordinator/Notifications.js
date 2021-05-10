@@ -33,12 +33,12 @@ function AllNotifications() {
     }
   };
 
-  const target = (data) => {
+  const target = (students,companies) => {
     let result = "";
-    if (data.students) {
+    if (students) {
       result += "Students,";
     }
-    if (data.companies) {
+    if (companies) {
       result += "Companies";
     }
 
@@ -62,12 +62,12 @@ function AllNotifications() {
           </tr>
         </thead>
         <tbody>
-          {notifyData.map(({ date, title, message }, id) => {
+          {notifyData.map(({ date, title, message,students, companies}, id) => {
             return (
               <tr>
                 <td>{id + 1}</td>
                 <td>{date}</td>
-                <td>{target(notifyData)}</td>
+                <td>{target(students, companies)}</td>
                 <td>{title}</td>
                 <td>{message}</td>
               </tr>

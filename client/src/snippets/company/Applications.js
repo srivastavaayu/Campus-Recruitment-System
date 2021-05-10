@@ -100,6 +100,34 @@ function CurrentApplications() {
     userName: "",
   });
 
+  //backend for getting student data 
+  const [student,setstudent] = useState({});
+  const studentData = async (userName) =>{
+    console.log("Inside Student Data");
+    console.log(userName);
+
+    try{
+      const res = await fetch("/gettingStudentData",{
+        method: "POST",
+        headers:{
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userName 
+        })
+      });
+  
+      const data = await res.json();
+      console.log(data);
+      setstudent(data);
+      console.log(student);
+    }catch(err){
+      console.log(err);
+    }
+
+    
+  }
+
   const archive = async (
     creatorName,
     jobId,
@@ -110,6 +138,7 @@ function CurrentApplications() {
     applicationStatus,
     userName
   ) => {
+    studentData(userName);
     setApplicant({
       creatorName,
       jobId,

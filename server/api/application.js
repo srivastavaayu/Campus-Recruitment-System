@@ -5,6 +5,7 @@ require("../db/conn");
 
 const authentication = require("../middleware/authentication");
 const Application = require("../model/applicationSchema");
+const Student = require("../model/studentSchema");
 
 router.post("/applyJob",authentication, async (req, res)=>{
     console.log(req.body);
@@ -77,6 +78,18 @@ router.post("/updateJobStatus",authentication, async (req, res)=>{
         }else{
             return res.status(502).json({message: "Database Failure"});
         }
+    }
+});
+
+//student data 
+router.post("/gettingStudentData",async (req, res)=>{
+    const userName = req.body.userName;
+    let result;
+    try{
+        result = await Student.findOne({userName});
+        res.send(result);
+    }catch(err){
+        console.log(err);
     }
 })
 module.exports = router;
