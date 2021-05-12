@@ -167,84 +167,83 @@ function CurrentOpenings() {
               <h5 className="modal-title">View Job</h5>
               <button className="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <div className="modal-body">
-              <label className="form-label" htmlFor="studentViewJobCompanyName">
-                Company Name
-              </label>
-              <div className="input-group mb-3">
-                <input
-                  id="studentViewJobCompanyName"
-                  className="form-control"
-                  type="text"
-                  placeholder="Company Name"
-                  name="CompanyName"
-                  value={jobInfo.creator}
-                  disabled
-                />
-              </div>
-              <label
-                className="form-label"
-                htmlFor="studentViewJobCompanyDescription"
-              >
-                Company Description
-              </label>
-              <div className="input-group mb-3">
-                <input
-                  id="studentViewJobCompanyDescription"
-                  className="form-control"
-                  type="text"
-                  placeholder="Company Description"
-                  name="CompanyDescription"
-                  value={jobInfo.companyDescription}
-                  disabled
-                />
-              </div>
-              <label className="form-label" htmlFor="studentViewJobJobID">
-                Job ID
-              </label>
-              <div className="input-group mb-3">
-                <input
-                  id="studentViewJobJobID"
-                  className="form-control"
-                  type="text"
-                  placeholder="Job ID"
-                  name="JobID"
-                  value={jobInfo.jobId}
-                  disabled
-                />
-              </div>
-              <label className="form-label" htmlFor="studentViewJobJobTitle">
-                Job Title
-              </label>
-              <div className="input-group mb-3">
-                <input
-                  id="studentViewJobJobTitle"
-                  className="form-control"
-                  type="text"
-                  placeholder="Job Title"
-                  name="JobTitle"
-                  value={jobInfo.title}
-                  disabled
-                />
-              </div>
-              <label
-                className="form-label"
-                htmlFor="studentViewJobJobDescription"
-              >
-                Job Description
-              </label>
-              <div className="input-group mb-3">
-                <textarea
-                  id="studentViewJobJobDescription"
-                  className="form-control"
-                  type="text"
-                  placeholder="Job Description"
-                  name="message"
-                  rows="4"
-                  value={jobInfo.description}
-                  disabled
-                />
-              </div>
+            <div className="modal-body text-start">
+              <form className="row g-3">
+                <div className="col-md-12">
+                  <label
+                    className="form-label"
+                    htmlFor="studentViewJobCompanyName"
+                  >
+                    Company Name
+                  </label>
+                  <div className="input-group mb-3">
+                    <input
+                      id="studentViewJobCompanyName"
+                      className="form-control"
+                      type="text"
+                      placeholder="Company Name"
+                      name="CompanyName"
+                      value={jobInfo.creator}
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div className="col-md-5">
+                  <label className="form-label" htmlFor="studentViewJobJobID">
+                    Job ID
+                  </label>
+                  <div className="input-group mb-3">
+                    <input
+                      id="studentViewJobJobID"
+                      className="form-control"
+                      type="text"
+                      placeholder="Job ID"
+                      name="JobID"
+                      value={jobInfo.jobId}
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div className="col-md-7">
+                  <label
+                    className="form-label"
+                    htmlFor="studentViewJobJobTitle"
+                  >
+                    Job Title
+                  </label>
+                  <div className="input-group mb-3">
+                    <input
+                      id="studentViewJobJobTitle"
+                      className="form-control"
+                      type="text"
+                      placeholder="Job Title"
+                      name="JobTitle"
+                      value={jobInfo.title}
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div className="col-md-12">
+                  <label
+                    className="form-label"
+                    htmlFor="studentViewJobJobDescription"
+                  >
+                    Job Description
+                  </label>
+                  <div className="input-group mb-3">
+                    <textarea
+                      id="studentViewJobJobDescription"
+                      className="form-control"
+                      type="text"
+                      placeholder="Job Description"
+                      name="message"
+                      rows="4"
+                      value={jobInfo.description}
+                      disabled
+                    />
+                  </div>
+                </div>
+              </form>
             </div>
             <div className="modal-footer">
               <button className="btn btn-secondary" data-bs-dismiss="modal">

@@ -33,7 +33,7 @@ function AllNotifications() {
     }
   };
 
-  const target = (students,companies) => {
+  const target = (students, companies) => {
     let result = "";
     if (students) {
       result += "Students,";
@@ -56,23 +56,30 @@ function AllNotifications() {
           <tr>
             <th>#</th>
             <th>Timestamp</th>
+            <th>Creator Role</th>
             <th>Target</th>
             <th>Title</th>
             <th>Message</th>
           </tr>
         </thead>
         <tbody>
-          {notifyData.map(({ date, title, message,students, companies}, id) => {
-            return (
-              <tr>
-                <td>{id + 1}</td>
-                <td>{date}</td>
-                <td>{target(students, companies)}</td>
-                <td>{title}</td>
-                <td>{message}</td>
-              </tr>
-            );
-          })}
+          {notifyData.map(
+            (
+              { creatorRole, date, title, message, students, companies },
+              id
+            ) => {
+              return (
+                <tr>
+                  <td>{id + 1}</td>
+                  <td>{date}</td>
+                  <td>{creatorRole}</td>
+                  <td>{target(students, companies)}</td>
+                  <td>{title}</td>
+                  <td>{message}</td>
+                </tr>
+              );
+            }
+          )}
         </tbody>
       </table>
     </>

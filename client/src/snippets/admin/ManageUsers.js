@@ -29,67 +29,72 @@ function PendingPlacementCoordinators() {
     }
   };
 
-  const approve = async (userName,name)=>{
+  const approve = async (userName, name) => {
     //console.log("Inside Pending Companies Approve Functions");
     //console.log(userName,name);
 
     const user = "Placement Coordinator";
 
-    try{
-      const res = await fetch("/verifyUser",{
+    try {
+      const res = await fetch("/verifyUser", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          user,userName,name
+          user,
+          userName,
+          name,
         }),
       });
 
       const data = await res.json();
 
-      if (res.status===202){
+      if (res.status === 202) {
         console.log(data.message);
         window.alert(data.message);
-      }else{
+      } else {
         console.log(data.message);
         window.alert(data.message);
       }
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
 
-  const deleteUser = async (userName,name)=>{
+  const deleteUser = async (userName, name) => {
     //console.log("Inside Pending Companies Delete Functions");
     //console.log(userName,name);
 
-    const user="Placement Coordinator";
+    const user = "Placement Coordinator";
 
-    try{
-      const res = await fetch("/deleteUsers",{
+    try {
+      const res = await fetch("/deleteUsers", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          user,userName,name
+          user,
+          userName,
+          name,
         }),
       });
 
       const data = await res.json();
 
-      if (res.status===202){
+      if (res.status === 202) {
         console.log(data.message);
         window.alert(data.message);
-      }else{
+        window.location.reload(true);
+      } else {
         console.log(data.message);
         window.alert(data.message);
       }
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   useEffect(() => {
     callAboutPage();
@@ -118,14 +123,20 @@ function PendingPlacementCoordinators() {
                 <td>{userName}</td>
                 <td>{name}</td>
                 <td>
-                  <button className="btn btn-outline-success"
-                    onClick={approve.bind(this,userName,name)}
-                  >Approve</button>
+                  <button
+                    className="btn btn-outline-success"
+                    onClick={approve.bind(this, userName, name)}
+                  >
+                    Approve
+                  </button>
                 </td>
                 <td>
-                  <button className="btn btn-outline-danger"
-                    onClick={deleteUser.bind(this,userName,name)}
-                  >Delete</button>
+                  <button
+                    className="btn btn-outline-danger"
+                    onClick={deleteUser.bind(this, userName, name)}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             );
@@ -137,7 +148,6 @@ function PendingPlacementCoordinators() {
 }
 
 function AllPlacementCoordinators() {
-
   //backend for pending Companies
   const [companydata, setCompanyData] = useState([]);
 
@@ -163,36 +173,39 @@ function AllPlacementCoordinators() {
     }
   };
 
-  const deleteUser = async (userName,name)=>{
+  const deleteUser = async (userName, name) => {
     //console.log("Inside Pending Companies Delete Functions");
     //console.log(userName,name);
 
-    const user="Placement Coordinator";
+    const user = "Placement Coordinator";
 
-    try{
-      const res = await fetch("/deleteUsers",{
+    try {
+      const res = await fetch("/deleteUsers", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          user,userName,name
+          user,
+          userName,
+          name,
         }),
       });
 
       const data = await res.json();
 
-      if (res.status===202){
+      if (res.status === 202) {
         console.log(data.message);
         window.alert(data.message);
-      }else{
+        window.location.reload(true);
+      } else {
         console.log(data.message);
         window.alert(data.message);
       }
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   useEffect(() => {
     callAboutPage();
@@ -220,9 +233,12 @@ function AllPlacementCoordinators() {
                 <td>{userName}</td>
                 <td>{name}</td>
                 <td>
-                  <button className="btn btn-outline-danger"
-                    onClick={deleteUser.bind(this,userName,name)}
-                  >Delete</button>
+                  <button
+                    className="btn btn-outline-danger"
+                    onClick={deleteUser.bind(this, userName, name)}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             );
@@ -259,67 +275,73 @@ function PendingCompanies() {
     }
   };
 
-  const approve = async (userName,name)=>{
+  const approve = async (userName, name) => {
     //console.log("Inside Pending Companies Approve Functions");
     //console.log(userName,name);
 
     const user = "Company";
 
-    try{
-      const res = await fetch("/verifyUser",{
+    try {
+      const res = await fetch("/verifyUser", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          user,userName,name
+          user,
+          userName,
+          name,
         }),
       });
 
       const data = await res.json();
 
-      if (res.status===202){
+      if (res.status === 202) {
         console.log(data.message);
         window.alert(data.message);
-      }else{
+        window.location.reload(true);
+      } else {
         console.log(data.message);
         window.alert(data.message);
       }
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
 
-  const deleteUser = async (userName,name)=>{
+  const deleteUser = async (userName, name) => {
     //console.log("Inside Pending Companies Delete Functions");
     //console.log(userName,name);
 
-    const user="Company";
+    const user = "Company";
 
-    try{
-      const res = await fetch("/deleteUsers",{
+    try {
+      const res = await fetch("/deleteUsers", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          user,userName,name
+          user,
+          userName,
+          name,
         }),
       });
 
       const data = await res.json();
 
-      if (res.status===202){
+      if (res.status === 202) {
         console.log(data.message);
         window.alert(data.message);
-      }else{
+        window.location.reload(true);
+      } else {
         console.log(data.message);
         window.alert(data.message);
       }
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   useEffect(() => {
     callAboutPage();
@@ -350,14 +372,20 @@ function PendingCompanies() {
                 <td>{name}</td>
                 <td>{email}</td>
                 <td>
-                  <button className="btn btn-outline-success"
-                    onClick={approve.bind(this,userName,name)}
-                  >Approve</button>
+                  <button
+                    className="btn btn-outline-success"
+                    onClick={approve.bind(this, userName, name)}
+                  >
+                    Approve
+                  </button>
                 </td>
                 <td>
-                  <button className="btn btn-outline-danger"
-                    onClick={deleteUser.bind(this,userName,name)}
-                  >Delete</button>
+                  <button
+                    className="btn btn-outline-danger"
+                    onClick={deleteUser.bind(this, userName, name)}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             );
@@ -394,36 +422,39 @@ function AllCompanies() {
     }
   };
 
-  const deleteUser = async (userName,name)=>{
+  const deleteUser = async (userName, name) => {
     //console.log("Inside Pending Companies Delete Functions");
     //console.log(userName,name);
 
-    const user="Company";
+    const user = "Company";
 
-    try{
-      const res = await fetch("/deleteUsers",{
+    try {
+      const res = await fetch("/deleteUsers", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          user,userName,name
+          user,
+          userName,
+          name,
         }),
       });
 
       const data = await res.json();
 
-      if (res.status===202){
+      if (res.status === 202) {
         console.log(data.message);
         window.alert(data.message);
-      }else{
+        window.location.reload(true);
+      } else {
         console.log(data.message);
         window.alert(data.message);
       }
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   useEffect(() => {
     callAboutPage();
@@ -453,9 +484,12 @@ function AllCompanies() {
                 <td>{name}</td>
                 <td>{email}</td>
                 <td>
-                  <button className="btn btn-outline-danger"
-                    onClick={deleteUser.bind(this,userName,name)}
-                  >Delete</button>
+                  <button
+                    className="btn btn-outline-danger"
+                    onClick={deleteUser.bind(this, userName, name)}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             );
@@ -492,70 +526,73 @@ function PendingStudents() {
     }
   };
 
-  const approve = async (userName,name)=>{
+  const approve = async (userName, name) => {
     //console.log("Inside Pending Students Approve Functions");
     //console.log(userName,name);
 
-    const user="Student";
+    const user = "Student";
 
-    try{
-      const res = await fetch("/verifyUser",{
+    try {
+      const res = await fetch("/verifyUser", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          user,userName,name
+          user,
+          userName,
+          name,
         }),
       });
 
       const data = await res.json();
 
-      if (res.status===202){
+      if (res.status === 202) {
         console.log(data.message);
         window.alert(data.message);
-      }else{
+        window.location.reload(true);
+      } else {
         console.log(data.message);
         window.alert(data.message);
       }
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
 
-  const deleteUser = async (userName,name)=>{
+  const deleteUser = async (userName, name) => {
     //console.log("Inside Pending Students Delete Functions");
     //console.log(userName,name);
 
-    const user="Student";
+    const user = "Student";
 
-    try{
-      const res = await fetch("/deleteUsers",{
+    try {
+      const res = await fetch("/deleteUsers", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          user,userName,name
+          user,
+          userName,
+          name,
         }),
       });
 
       const data = await res.json();
 
-      if (res.status===202){
+      if (res.status === 202) {
         console.log(data.message);
         window.alert(data.message);
-      }else{
+        window.location.reload(true);
+      } else {
         console.log(data.message);
         window.alert(data.message);
       }
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
-
-  }
-
-  
+  };
 
   useEffect(() => {
     callAboutPage();
@@ -584,14 +621,20 @@ function PendingStudents() {
                 <td>{userName}</td>
                 <td>{name}</td>
                 <td>
-                  <button className="btn btn-outline-success"
-                    onClick = {approve.bind(this,userName,name)}
-                  >Approve</button>
+                  <button
+                    className="btn btn-outline-success"
+                    onClick={approve.bind(this, userName, name)}
+                  >
+                    Approve
+                  </button>
                 </td>
                 <td>
-                  <button className="btn btn-outline-danger"
-                    onClick={deleteUser.bind(this,userName,name)}
-                  >Delete</button>
+                  <button
+                    className="btn btn-outline-danger"
+                    onClick={deleteUser.bind(this, userName, name)}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             );
@@ -603,7 +646,6 @@ function PendingStudents() {
 }
 
 function AllStudents() {
-
   //backend for pending Students
   const [studentdata, setStudentData] = useState([]);
 
@@ -627,45 +669,47 @@ function AllStudents() {
     } catch (e) {
       console.log(e);
     }
-  }
+  };
 
   //backend Code for delete Students
-  const deleteUser = async (userName,name)=>{
+  const deleteUser = async (userName, name) => {
     //console.log("Inside Pending Students Delete Functions");
     //console.log(userName,name);
 
-    const user="Student";
+    const user = "Student";
 
-    try{
-      const res = await fetch("/deleteUsers",{
+    try {
+      const res = await fetch("/deleteUsers", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          user,userName,name
+          user,
+          userName,
+          name,
         }),
       });
 
       const data = await res.json();
 
-      if (res.status===202){
+      if (res.status === 202) {
         console.log(data.message);
         window.alert(data.message);
-      }else{
+        window.location.reload(true);
+      } else {
         console.log(data.message);
         window.alert(data.message);
       }
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
-
-  }
+  };
 
   useEffect(() => {
     callAboutPage();
   }, []);
-  
+
   return (
     <>
       <h3 id="webpageTitle" className="text-center">
@@ -688,9 +732,12 @@ function AllStudents() {
                 <td>{userName}</td>
                 <td>{name}</td>
                 <td>
-                  <button className="btn btn-outline-danger"
-                    onClick={deleteUser.bind(this,userName,name)}
-                  >Delete</button>
+                  <button
+                    className="btn btn-outline-danger"
+                    onClick={deleteUser.bind(this, userName, name)}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             );
@@ -702,55 +749,37 @@ function AllStudents() {
 }
 
 function ManageUsers() {
-  let { slug } = useParams();
-  let [userType, setUserType] = useState(slug);
-  useEffect(() => {
-    document
-      .getElementsByClassName("dropdown-toggle")[0]
-      .classList.add("active");
-    if (slug === "PlacementCoordinators") {
-      setUserType("Placement Coordinators");
-    } else {
-      setUserType(slug);
-    }
-  }, [slug]);
   return (
     <>
       <Header />
       <main>
         <h2 id="webpageTitle" className="text-center">
-          Manage {userType}
+          Manage Users
         </h2>
         <hr />
         <div id="manageUsersContainer">
           <nav className="nav nav-tabs nav-fill">
-            <NavLink
-              className="nav-link"
-              to="/Admin/ManageUsers/PlacementCoordinators"
-              onClick={() => setUserType("PlacementCoordinators")}
+            <a
+              className="nav-link active"
               data-bs-toggle="tab"
               data-bs-target="#ManagePlacementCoordinators"
             >
               Placement Coordinators
-            </NavLink>
-            <NavLink
+            </a>
+            <a
               className="nav-link"
-              to="/Admin/ManageUsers/Companies"
-              onClick={() => setUserType("Companies")}
               data-bs-toggle="tab"
               data-bs-target="#ManageCompanies"
             >
               Companies
-            </NavLink>
-            <NavLink
+            </a>
+            <a
               className="nav-link"
-              to="/Admin/ManageUsers/Students"
-              onClick={() => setUserType("Students")}
               data-bs-toggle="tab"
               data-bs-target="#ManageStudents"
             >
               Students
-            </NavLink>
+            </a>
           </nav>
           <div className="tab-content">
             <div

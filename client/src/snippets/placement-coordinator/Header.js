@@ -1,53 +1,40 @@
 import React, { useState, useEffect } from "react";
-import { Link, NavLink,useHistory } from "react-router-dom";
+import { Link, NavLink, useHistory } from "react-router-dom";
 import "../../css/Header.css";
 import crslogo from "../../img/crslogo.png";
 
 function Header(props) {
-  let [username, setUsername] = useState(props.username);
-
   //backend
-  const [userData,setUserData] = useState({});
+  const [userData, setUserData] = useState({});
   const history = useHistory();
 
-  const callAboutPage = async ()=>{
-    try{
-      const res = await fetch('/userData',{
-        method:"GET",
-        headers:{
+  const callAboutPage = async () => {
+    try {
+      const res = await fetch("/userData", {
+        method: "GET",
+        headers: {
           Accept: "application/json",
-          "Content-Type": "application/json"
-          },
-          credentials:"include"
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
       });
 
       const data = await res.json();
       console.log(data);
       setUserData(data);
-            
 
-
-      if(!res.status ===200){
+      if (!res.status === 200) {
         const error = new Error(res.error);
-          throw error;
-        }
-
-        }catch(err){
-            console.log(err);
-            history.push('');
-
-        }
-  }
-
+        throw error;
+      }
+    } catch (err) {
+      console.log(err);
+      history.push("");
+    }
+  };
 
   useEffect(() => {
-    document.getElementsByClassName("dropdown-toggle")[0].style.userSelect =
-      "None";
-    document.getElementsByClassName("dropdown-toggle")[1].style.userSelect =
-      "None";
-
     callAboutPage();
-
   }, []);
   return (
     <>
@@ -84,28 +71,13 @@ function Header(props) {
                     Home
                   </NavLink>
                 </li>
-                <li className="nav-item dropdown">
-                  <a
-                    className="nav-link dropdown-toggle"
-                    role="button"
-                    data-bs-toggle="dropdown"
+                <li className="nav-item">
+                  <NavLink
+                    className="nav-link"
+                    to="/PlacementCoordinator/ManageUsers"
                   >
                     Manage Users
-                  </a>
-                  <div className="dropdown-menu dropdown-menu-end">
-                    <NavLink
-                      className="dropdown-item"
-                      to="/PlacementCoordinator/ManageUsers/Companies"
-                    >
-                      Manage Companies
-                    </NavLink>
-                    <NavLink
-                      className="dropdown-item"
-                      to="/PlacementCoordinator/ManageUsers/Students"
-                    >
-                      Manage Students
-                    </NavLink>
-                  </div>
+                  </NavLink>
                 </li>
                 <li className="nav-item">
                   <NavLink
@@ -138,7 +110,7 @@ function Header(props) {
                     </NavLink>
                     <div class="dropdown-divider"></div>
                     <Link className="dropdown-item" to="/">
-                      Logout @{username}
+                      Logout @{userData.userName}
                     </Link>
                   </div>
                 </li>

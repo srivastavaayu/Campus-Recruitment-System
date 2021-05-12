@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, NavLink, useHistory } from "react-router-dom";
+import { Link, NavLink, useHistory, Redirect } from "react-router-dom";
 import "../css/Header.css";
 import "../css/Home.css";
 import crslogo from "../img/crslogo.png";
@@ -51,8 +51,8 @@ function Authenticator(props) {
   const [signUser, setSignUser] = useState({
     member: "",
     userName: "",
-    name:"",
-    email:"",
+    name: "",
+    email: "",
     password: "",
     rpassword: "",
   });
@@ -101,7 +101,7 @@ function Authenticator(props) {
     e.preventDefault();
     console.log(signUser);
 
-    const { member, userName,name,email, password, rpassword } = signUser;
+    const { member, userName, name, email, password, rpassword } = signUser;
     try {
       const res = await fetch("/registerUser", {
         method: "POST",
@@ -123,6 +123,7 @@ function Authenticator(props) {
       if (res.status === 201) {
         console.log(data.message);
         window.alert(data.message);
+        history.push("/");
       } else {
         console.log(data.message);
         window.alert(data.message);

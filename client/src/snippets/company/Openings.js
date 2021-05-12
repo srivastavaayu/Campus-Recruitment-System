@@ -31,36 +31,36 @@ function CurrentOpenings() {
     }
   };
   //job archive back-end code
-  const archive = async (jobId,title)=>{
+  const archive = async (jobId, title) => {
     console.log("Inside Archive function");
     console.log(jobId);
     console.log(title);
 
-    try{
-      const res = await fetch("/jobArchive",{
+    try {
+      const res = await fetch("/jobArchive", {
         method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            jobId,
-            title
-          })
-        });
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          jobId,
+          title,
+        }),
+      });
 
-        const data = await res.json();
+      const data = await res.json();
 
-        if(res.status===202){
-          console.log(data.message);
-          window.alert(data.message);
-        }else{
-          console.log(data.message);
-          window.alert(data.message);
-        }
-    }catch (err) {
+      if (res.status === 202) {
+        console.log(data.message);
+        window.alert(data.message);
+      } else {
+        console.log(data.message);
+        window.alert(data.message);
+      }
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   useEffect(() => {
     callAboutPage();
@@ -85,7 +85,10 @@ function CurrentOpenings() {
                 <td>{jobId}</td>
                 <td>{title}</td>
                 <td>
-                  <button className="btn btn-outline-danger" onClick={archive.bind(this,jobId, title)}>
+                  <button
+                    className="btn btn-outline-danger"
+                    onClick={archive.bind(this, jobId, title)}
+                  >
                     Archive Job
                   </button>
                 </td>
@@ -181,7 +184,7 @@ function Openings() {
   const addJob = async (e) => {
     e.preventDefault();
 
-    const { jobId, title, ctc,description } = job;
+    const { jobId, title, ctc, description } = job;
 
     try {
       const res = await fetch("/job", {
@@ -275,17 +278,6 @@ function Openings() {
                       onChange={handleInputs}
                       rows="4"
                       required
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="companyFileInputs" className="form-label">
-                      Attach Files
-                    </label>
-                    <input
-                      class="form-control"
-                      type="file"
-                      id="companyFileInputs"
-                      multiple
                     />
                   </div>
                   <label className="form-label" htmlFor="companyCTCOffered">

@@ -36,7 +36,7 @@ function App() {
         <Route exact path="/Authenticator" component={Authenticator}></Route>
         <Route path="/Admin">
           <Route path="/Admin/Home" component={AdminHome} />
-          <Route path="/Admin/ManageUsers/:slug" component={AdminManageUsers} />
+          <Route path="/Admin/ManageUsers" component={AdminManageUsers} />
           <Route path="/Admin/Notifications" component={AdminNotifications} />
           <Route path="/Admin/Profile" component={AdminProfile} />
           <Route path="/Admin/ChangePassword" component={AdminChangePassword} />
@@ -47,7 +47,7 @@ function App() {
             component={PlacementCoordinatorHome}
           />
           <Route
-            path="/PlacementCoordinator/ManageUsers/:slug"
+            path="/PlacementCoordinator/ManageUsers"
             component={PlacementCoordinatorManageUsers}
           />
           <Route

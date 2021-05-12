@@ -32,7 +32,7 @@ function AllNotifications() {
     }
   };
 
-  const target = (students,companies,placementCoordinators) => {
+  const target = (students, companies, placementCoordinators) => {
     let result = "";
     if (students) {
       result += "Students,";
@@ -58,23 +58,38 @@ function AllNotifications() {
           <tr>
             <th>#</th>
             <th>Timestamp</th>
+            <th>Creator Role</th>
             <th>Target</th>
             <th>Title</th>
             <th>Message</th>
           </tr>
         </thead>
         <tbody>
-          {notifyData.map(({ date, title, message,students,companies,placementCoordinators }, id) => {
-            return (
-              <tr>
-                <td>{id + 1}</td>
-                <td>{date}</td>
-                <td>{target(students,companies,placementCoordinators)}</td>
-                <td>{title}</td>
-                <td>{message}</td>
-              </tr>
-            );
-          })}
+          {notifyData.map(
+            (
+              {
+                creatorRole,
+                date,
+                title,
+                message,
+                students,
+                companies,
+                placementCoordinators,
+              },
+              id
+            ) => {
+              return (
+                <tr>
+                  <td>{id + 1}</td>
+                  <td>{date}</td>
+                  <td>{creatorRole}</td>
+                  <td>{target(students, companies, placementCoordinators)}</td>
+                  <td>{title}</td>
+                  <td>{message}</td>
+                </tr>
+              );
+            }
+          )}
         </tbody>
       </table>
     </>
@@ -161,119 +176,111 @@ function Notifications() {
           tabIndex="-1"
         >
           <div className="modal-dialog modal-dialog-centered">
-            <form method="POST">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title">Add Notification</h5>
-                  <button
-                    className="btn-close"
-                    data-bs-dismiss="modal"
-                  ></button>
-                </div>
-                <div className="modal-body">
-                  <label className="form-label" htmlFor="adminNotificationType">
-                    Notification Target
-                  </label>
-                  <div id="adminNotificationType" className="mb-3">
-                    <div className="form-check">
-                      <input
-                        id="adminTargetCheckbox1"
-                        className="form-check-input"
-                        type="checkbox"
-                        value="Placement Coordinators"
-                        name="placementCoordinators"
-                        onChange={handleInputs}
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="adminTargetCheckbox1"
-                      >
-                        Placement Coordinators
-                      </label>
-                    </div>
-                    <div className="form-check">
-                      <input
-                        id="adminTargetCheckbox2"
-                        className="form-check-input"
-                        type="checkbox"
-                        value="Companies"
-                        name="companies"
-                        onChange={handleInputs}
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="adminTargetCheckbox2"
-                      >
-                        Companies
-                      </label>
-                    </div>
-                    <div className="form-check">
-                      <input
-                        id="adminTargetCheckbox3"
-                        className="form-check-input"
-                        type="checkbox"
-                        value="Students"
-                        name="students"
-                        onChange={handleInputs}
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="adminTargetCheckbox3"
-                      >
-                        Students
-                      </label>
-                    </div>
-                  </div>
-                  <label
-                    className="form-label"
-                    htmlFor="adminNotificationTitle"
-                  >
-                    Notification Title
-                  </label>
-                  <div className="input-group mb-3">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Add Notification</h5>
+                <button className="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div className="modal-body">
+                <label className="form-label" htmlFor="adminNotificationType">
+                  Notification Target
+                </label>
+                <div id="adminNotificationType" className="mb-3">
+                  <div className="form-check">
                     <input
-                      id="adminNotificationTitle"
-                      className="form-control"
-                      type="text"
-                      placeholder="Notification Title"
-                      name="title"
-                      value={data.title}
-                      onChange={handleInputsChange}
+                      id="adminTargetCheckbox1"
+                      className="form-check-input"
+                      type="checkbox"
+                      value="Placement Coordinators"
+                      name="placementCoordinators"
+                      onChange={handleInputs}
                     />
+                    <label
+                      className="form-check-label"
+                      htmlFor="adminTargetCheckbox1"
+                    >
+                      Placement Coordinators
+                    </label>
                   </div>
-                  <label
-                    className="form-label"
-                    htmlFor="adminNotificationMessage"
-                  >
-                    Notification Message
-                  </label>
-                  <div className="input-group mb-3">
-                    <textarea
-                      id="adminNotificationMessage"
-                      className="form-control"
-                      type="text"
-                      placeholder="Notification Message"
-                      name="message"
-                      value={data.message}
-                      onChange={handleInputsChange}
-                      rows="4"
+                  <div className="form-check">
+                    <input
+                      id="adminTargetCheckbox2"
+                      className="form-check-input"
+                      type="checkbox"
+                      value="Companies"
+                      name="companies"
+                      onChange={handleInputs}
                     />
+                    <label
+                      className="form-check-label"
+                      htmlFor="adminTargetCheckbox2"
+                    >
+                      Companies
+                    </label>
+                  </div>
+                  <div className="form-check">
+                    <input
+                      id="adminTargetCheckbox3"
+                      className="form-check-input"
+                      type="checkbox"
+                      value="Students"
+                      name="students"
+                      onChange={handleInputs}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="adminTargetCheckbox3"
+                    >
+                      Students
+                    </label>
                   </div>
                 </div>
-                <div className="modal-footer">
-                  <button className="btn btn-secondary" data-bs-dismiss="modal">
-                    Close
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={sendNotification}
-                  >
-                    Push Notification
-                  </button>
+                <label className="form-label" htmlFor="adminNotificationTitle">
+                  Notification Title
+                </label>
+                <div className="input-group mb-3">
+                  <input
+                    id="adminNotificationTitle"
+                    className="form-control"
+                    type="text"
+                    placeholder="Notification Title"
+                    name="title"
+                    value={data.title}
+                    onChange={handleInputsChange}
+                  />
+                </div>
+                <label
+                  className="form-label"
+                  htmlFor="adminNotificationMessage"
+                >
+                  Notification Message
+                </label>
+                <div className="input-group mb-3">
+                  <textarea
+                    id="adminNotificationMessage"
+                    className="form-control"
+                    type="text"
+                    placeholder="Notification Message"
+                    name="message"
+                    value={data.message}
+                    onChange={handleInputsChange}
+                    rows="4"
+                  />
                 </div>
               </div>
-            </form>
+              <div className="modal-footer">
+                <button className="btn btn-secondary" data-bs-dismiss="modal">
+                  Close
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={sendNotification}
+                >
+                  Push Notification
+                </button>
+              </div>
+            </div>
           </div>
         </div>
         <div className="text-center">

@@ -1,89 +1,97 @@
-import React, { useEffect,useState } from "react";
-import { Link, NavLink ,useHistory} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, NavLink, useHistory } from "react-router-dom";
 import Header from "./Header";
 
 function Profile() {
+  //back end
 
-  //back end 
-
-
-  const [userData,setUserData] = useState({});
+  const [userData, setUserData] = useState({});
   const history = useHistory();
 
-  const callAboutPage = async ()=>{
-    try{
-      const res = await fetch('/userData',{
-        method:"GET",
-        headers:{
+  const callAboutPage = async () => {
+    try {
+      const res = await fetch("/userData", {
+        method: "GET",
+        headers: {
           Accept: "application/json",
-          "Content-Type": "application/json"
-          },
-          credentials:"include"
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
       });
 
       const data = await res.json();
       console.log(data);
       setUserData(data);
-            
 
-
-      if(!res.status ===200){
+      if (!res.status === 200) {
         const error = new Error(res.error);
-          throw error;
-        }
+        throw error;
+      }
+    } catch (err) {
+      console.log(err);
+      history.push("");
+    }
+  };
 
-        }catch(err){
-            console.log(err);
-            history.push('');
+  let name, value;
+  const handleInputs = (e) => {
+    console.log(e.target.value);
+    name = e.target.name;
+    value = e.target.value;
 
-        }
-  }
-
-  let name,value;
-  const handleInputs = (e) =>{
-      console.log(e.target.value);
-      name = e.target.name;
-      value=e.target.value;
-
-      setUserData({...userData,[name]:value});
-  }
+    setUserData({ ...userData, [name]: value });
+  };
 
   //update data functions
-  const updateData =  async (e) =>{
+  const updateData = async (e) => {
     e.preventDefault();
 
-    const {userName,name,email,phone,address,department,portfolio,links}= userData;
+    const {
+      userName,
+      name,
+      email,
+      phone,
+      address,
+      department,
+      portfolio,
+      links,
+    } = userData;
 
-    try{
-
-      const res = await fetch("/update",{
-        method:"POST",
-        headers:{
-          "Content-Type": "application/json"
+    try {
+      const res = await fetch("/update", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userName,name,email,phone,address,department,portfolio,links
-        })
+          userName,
+          name,
+          email,
+          phone,
+          address,
+          department,
+          portfolio,
+          links,
+        }),
       });
 
       const data = await res.json();
 
-      if(res.status===202){
+      if (res.status === 202) {
         console.log("User updated successfully");
         window.alert("User Updated successfully");
-      }else{
+      } else {
         console.log("User updated unsuccessful");
         window.alert("User Updated unsuccessful");
       }
-
-    }catch(e){
+    } catch (e) {
       console.log(e);
     }
-  }
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     callAboutPage();
-  },[]);
+  }, []);
 
   return (
     <>
@@ -105,8 +113,6 @@ function Profile() {
                   name="name"
                   value={userData.name}
                   onChange={handleInputs}
-
-
                   required
                 />
                 <input
@@ -176,16 +182,6 @@ function Profile() {
                   required
                 />
               </div>
-              <div className="col-sm-7">
-                <label htmlFor="studentResume" className="col-form-label">
-                  Resume
-                </label>
-                <input
-                  className="form-control"
-                  type="file"
-                  id="studentResume"
-                />
-              </div>
             </div>
             <div className="row mb-3">
               <div className="col-sm-4">
@@ -222,7 +218,11 @@ function Profile() {
               </div>
             </div>
           </div>
-          <button className="btn btn-primary float-end" type="submit" onClick={updateData}>
+          <button
+            className="btn btn-primary float-end"
+            type="submit"
+            onClick={updateData}
+          >
             Save Changes
           </button>
           <button className="btn btn-danger float-end me-3" type="button">

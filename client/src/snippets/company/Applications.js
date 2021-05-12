@@ -17,25 +17,27 @@ function ApplicationStatus(props) {
 
 const sendStatusToBackend = async (userName, jobId, status) => {
   //console.log("Status is " + status, userName, jobId);
-  try{
-      const res = await fetch("/updateJobStatus",{
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          userName, jobId, status
-        })
-      });
-      const data = await res.json();
-      if(res.status===202){
-        console.log(data.message);
-        window.alert(data.message);
-      }else{
-        console.log(data.message);
-        window.alert(data.message);
-      }
-  }catch(err){
+  try {
+    const res = await fetch("/updateJobStatus", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userName,
+        jobId,
+        status,
+      }),
+    });
+    const data = await res.json();
+    if (res.status === 202) {
+      console.log(data.message);
+      window.alert(data.message);
+    } else {
+      console.log(data.message);
+      window.alert(data.message);
+    }
+  } catch (err) {
     console.log(err);
   }
 };
@@ -100,33 +102,31 @@ function CurrentApplications() {
     userName: "",
   });
 
-  //backend for getting student data 
-  const [student,setstudent] = useState({});
-  const studentData = async (userName) =>{
+  //backend for getting student data
+  const [student, setstudent] = useState({});
+  const studentData = async (userName) => {
     console.log("Inside Student Data");
     console.log(userName);
 
-    try{
-      const res = await fetch("/gettingStudentData",{
+    try {
+      const res = await fetch("/gettingStudentData", {
         method: "POST",
-        headers:{
+        headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userName 
-        })
+          userName,
+        }),
       });
-  
+
       const data = await res.json();
       console.log(data);
       setstudent(data);
       console.log(student);
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
-
-    
-  }
+  };
 
   const archive = async (
     creatorName,
@@ -164,58 +164,111 @@ function CurrentApplications() {
         id="companyViewApplication"
         tabIndex="-1"
       >
-        <div className="modal-dialog modal-dialog-centered">
+        <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title">View Application</h5>
               <button className="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <div className="modal-body">
-              <label className="form-label">Company Name</label>
-              <input
-                className="form-control mb-3"
-                type="text"
-                value={applicant.creatorName}
-                disabled
-              />
-              <label className="form-label">Job ID</label>
-              <input
-                className="form-control mb-3"
-                type="text"
-                value={applicant.jobId}
-                disabled
-              />
-              <label className="form-label">Job Title</label>
-              <input
-                className="form-control mb-3"
-                type="text"
-                value={applicant.title}
-                disabled
-              />
-              <label className="form-label">Job Description</label>
-              <textarea
-                className="form-control mb-3"
-                value={applicant.jobDescription}
-                disabled
-              />
-              <label className="form-label">Student Name</label>
-              <input
-                className="form-control mb-3"
-                type="text"
-                value={applicant.name}
-                disabled
-              />
-              <label className="form-label">Application Date</label>
-              <input
-                className="form-control mb-3"
-                type="text"
-                value={applicant.appliedDate}
-                disabled
-              />
-              <label className="form-label">Application Status</label>
-              <div className="mb-3">
-                <ApplicationStatus status={applicant.applicationStatus} />
-              </div>
+            <div className="modal-body ">
+              <form action="" className="row g-3 text-start">
+                <div className="col-md-7">
+                  <label className="form-label">Application Date</label>
+                  <input
+                    className="form-control mb-3"
+                    type="text"
+                    value={applicant.appliedDate}
+                    disabled
+                  />
+                </div>
+                <div className="col-md-5">
+                  <label className="form-label">Application Status</label>
+                  <div className="mb-3">
+                    <ApplicationStatus status={applicant.applicationStatus} />
+                  </div>
+                </div>
+                <div className="col-md-12">
+                  <label className="form-label">Company Name</label>
+                  <input
+                    className="form-control mb-3"
+                    type="text"
+                    value={applicant.creatorName}
+                    disabled
+                  />
+                </div>
+                <div className="col-md-5">
+                  <label className="form-label">Job ID</label>
+                  <input
+                    className="form-control mb-3"
+                    type="text"
+                    value={applicant.jobId}
+                    disabled
+                  />
+                </div>
+                <div className="col-md-7">
+                  <label className="form-label">Job Title</label>
+                  <input
+                    className="form-control mb-3"
+                    type="text"
+                    value={applicant.title}
+                    disabled
+                  />
+                </div>
+                <div className="col-md-12">
+                  <label className="form-label">Job Description</label>
+                  <textarea
+                    className="form-control mb-3"
+                    value={applicant.jobDescription}
+                    rows="4"
+                    disabled
+                  />
+                </div>
+                <div className="col-md-4">
+                  <label className="form-label">Student Username</label>
+                  <input
+                    className="form-control mb-3"
+                    type="text"
+                    value={student.userName}
+                    disabled
+                  />
+                </div>
+                <div className="col-md-8">
+                  <label className="form-label">Student Name</label>
+                  <input
+                    className="form-control mb-3"
+                    type="text"
+                    value={student.name}
+                    disabled
+                  />
+                </div>
+                <div className="col-md-5">
+                  <label className="form-label">Student Phone Number</label>
+                  <input
+                    className="form-control mb-3"
+                    type="tel"
+                    value={student.phone}
+                    disabled
+                  />
+                </div>
+                <div className="col-md-7">
+                  <label className="form-label">Student E-mail Address</label>
+                  <input
+                    className="form-control mb-3"
+                    type="email"
+                    value={student.email}
+                    disabled
+                  />
+                </div>
+                <div className="col-md-4">
+                  <label className="form-label">Student Department</label>
+                  <input
+                    className="form-control mb-3"
+                    type="text"
+                    value={student.department}
+                    disabled
+                  />
+                </div>
+              </form>
             </div>
             <div className="modal-footer">
               <button className="btn btn-secondary" data-bs-dismiss="modal">
