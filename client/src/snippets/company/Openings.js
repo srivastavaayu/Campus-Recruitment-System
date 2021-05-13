@@ -205,7 +205,7 @@ function Openings() {
       if (res.status === 201) {
         console.log("Job created successfully");
         window.alert("Job created successfully");
-        history.push("/Company/Openings");
+        window.location.reload(true);
       } else {
         console.log("Job Id already exists");
         window.alert("Job Id already exists");

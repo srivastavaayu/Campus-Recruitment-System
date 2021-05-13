@@ -33,6 +33,7 @@ const sendStatusToBackend = async (userName, jobId, status) => {
     if (res.status === 202) {
       console.log(data.message);
       window.alert(data.message);
+      window.location.reload(true);
     } else {
       console.log(data.message);
       window.alert(data.message);
