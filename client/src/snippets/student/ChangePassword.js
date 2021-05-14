@@ -46,6 +46,8 @@ function ChangePassword() {
       if (res.status ===202){
         console.log(data.message);
         window.alert(data.message);
+        window.location.reload(true);
+        setUserData({ cpassword: "", npassword: "", rpassword: "" });
       }else{
         console.log(data.message);
         window.alert(data.message);
@@ -73,7 +75,7 @@ function ChangePassword() {
               <div className="col-sm-9">
                 <input
                   className="form-control"
-                  type="text"
+                  type="password"
                   placeholder="Current Password"
                   name="cpassword"
                   value={userData.cpassword}
@@ -86,7 +88,7 @@ function ChangePassword() {
               <div className="col-sm-9">
                 <input
                   className="form-control"
-                  type="text"
+                  type="password"
                   placeholder="New Password"
                   name="npassword"
                   value={userData.npassword}
@@ -101,7 +103,7 @@ function ChangePassword() {
               <div className="col-sm-9">
                 <input
                   className="form-control"
-                  type="text"
+                  type="password"
                   placeholder="Re-enter New Password"
                   name="rpassword"
                   value={userData.rpassword}
