@@ -16,7 +16,6 @@ function Home() {
       });
 
       const data = await res.json();
-      console.log(data);
       setUserData(data);
 
       if (!res.status === 200) {

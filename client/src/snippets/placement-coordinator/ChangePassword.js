@@ -14,7 +14,6 @@ function ChangePassword() {
 
   let name, value;
   const handleInputs = (e) => {
-    //console.log(e.target.value);
     name = e.target.name;
     value = e.target.value;
 
@@ -23,8 +22,6 @@ function ChangePassword() {
 
   const updatePassword = async (e) => {
     e.preventDefault();
-
-    console.log(userData);
     const { cpassword, npassword, rpassword } = userData;
 
     try {
@@ -43,12 +40,10 @@ function ChangePassword() {
       const data = await res.json();
 
       if (res.status === 202) {
-        console.log(data.message);
         window.alert(data.message);
         window.location.reload(true);
         setUserData({ cpassword: "", npassword: "", rpassword: "" });
       } else {
-        console.log(data.message);
         window.alert(data.message);
       }
     } catch (e) {
