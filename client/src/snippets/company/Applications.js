@@ -16,7 +16,6 @@ function ApplicationStatus(props) {
 }
 
 const sendStatusToBackend = async (userName, jobId, status) => {
-  //console.log("Status is " + status, userName, jobId);
   try {
     const res = await fetch("/updateJobStatus", {
       method: "POST",
@@ -31,11 +30,9 @@ const sendStatusToBackend = async (userName, jobId, status) => {
     });
     const data = await res.json();
     if (res.status === 202) {
-      console.log(data.message);
       window.alert(data.message);
       window.location.reload(true);
     } else {
-      console.log(data.message);
       window.alert(data.message);
     }
   } catch (err) {
@@ -44,7 +41,6 @@ const sendStatusToBackend = async (userName, jobId, status) => {
 };
 
 const sendStatus = (userName, jobId) => {
-  console.log(userName, jobId);
   if (
     document.getElementById("companyApplicationsApplicationStatus1").checked
   ) {
@@ -87,9 +83,7 @@ function CurrentApplications() {
     });
 
     const data = await res.json();
-    console.log(data);
     setApplicants(data);
-    console.log(applicants);
   };
 
   const [applicant, setApplicant] = useState({
@@ -106,9 +100,6 @@ function CurrentApplications() {
   //backend for getting student data
   const [student, setstudent] = useState({});
   const studentData = async (userName) => {
-    console.log("Inside Student Data");
-    console.log(userName);
-
     try {
       const res = await fetch("/gettingStudentData", {
         method: "POST",
@@ -121,9 +112,7 @@ function CurrentApplications() {
       });
 
       const data = await res.json();
-      console.log(data);
       setstudent(data);
-      console.log(student);
     } catch (err) {
       console.log(err);
     }

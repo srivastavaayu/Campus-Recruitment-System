@@ -22,17 +22,12 @@ function PendingCompanies() {
       const data = await res.json();
 
       setCompanyData(data);
-
-      console.log(companydata);
     } catch (e) {
       console.log(e);
     }
   };
 
   const approve = async (userName, name) => {
-    //console.log("Inside Pending Companies Approve Functions");
-    //console.log(userName,name);
-
     const user = "Company";
 
     try {
@@ -51,11 +46,9 @@ function PendingCompanies() {
       const data = await res.json();
 
       if (res.status === 202) {
-        console.log(data.message);
         window.alert(data.message);
         window.location.reload(true);
       } else {
-        console.log(data.message);
         window.alert(data.message);
       }
     } catch (err) {
@@ -64,9 +57,6 @@ function PendingCompanies() {
   };
 
   const deleteUser = async (userName, name) => {
-    //console.log("Inside Pending Companies Delete Functions");
-    //console.log(userName,name);
-
     const user = "Company";
 
     try {
@@ -85,11 +75,9 @@ function PendingCompanies() {
       const data = await res.json();
 
       if (res.status === 202) {
-        console.log(data.message);
         window.alert(data.message);
         window.location.reload(true);
       } else {
-        console.log(data.message);
         window.alert(data.message);
       }
     } catch (err) {
@@ -169,8 +157,6 @@ function AllCompanies() {
       const data = await res.json();
 
       setCompanyData(data);
-
-      console.log(companydata);
     } catch (e) {
       console.log(e);
     }
@@ -178,9 +164,6 @@ function AllCompanies() {
 
   //delete company
   const deleteUser = async (userName, name) => {
-    //console.log("Inside Pending Companies Delete Functions");
-    //console.log(userName,name);
-
     const user = "Company";
 
     try {
@@ -199,11 +182,9 @@ function AllCompanies() {
       const data = await res.json();
 
       if (res.status === 202) {
-        console.log(data.message);
         window.alert(data.message);
         window.location.reload(true);
       } else {
-        console.log(data.message);
         window.alert(data.message);
       }
     } catch (err) {
@@ -274,17 +255,12 @@ function PendingStudents() {
       const data = await res.json();
 
       setStudentData(data);
-
-      console.log(studentdata);
     } catch (e) {
       console.log(e);
     }
   };
 
   const approve = async (userName, name) => {
-    //console.log("Inside Pending Students Approve Functions");
-    //console.log(userName,name);
-
     const user = "Student";
 
     try {
@@ -303,11 +279,9 @@ function PendingStudents() {
       const data = await res.json();
 
       if (res.status === 202) {
-        console.log(data.message);
         window.alert(data.message);
         window.location.reload(true);
       } else {
-        console.log(data.message);
         window.alert(data.message);
       }
     } catch (err) {
@@ -316,9 +290,6 @@ function PendingStudents() {
   };
 
   const deleteUser = async (userName, name) => {
-    //console.log("Inside Pending Students Delete Functions");
-    //console.log(userName,name);
-
     const user = "Student";
 
     try {
@@ -337,11 +308,9 @@ function PendingStudents() {
       const data = await res.json();
 
       if (res.status === 202) {
-        console.log(data.message);
         window.alert(data.message);
         window.location.reload(true);
       } else {
-        console.log(data.message);
         window.alert(data.message);
       }
     } catch (err) {
@@ -419,8 +388,6 @@ function AllStudents() {
       const data = await res.json();
 
       setStudentData(data);
-
-      console.log(studentdata);
     } catch (e) {
       console.log(e);
     }
@@ -428,9 +395,6 @@ function AllStudents() {
 
   //backend Code for delete Students
   const deleteUser = async (userName, name) => {
-    //console.log("Inside Pending Students Delete Functions");
-    //console.log(userName,name);
-
     const user = "Student";
 
     try {
@@ -449,11 +413,9 @@ function AllStudents() {
       const data = await res.json();
 
       if (res.status === 202) {
-        console.log(data.message);
         window.alert(data.message);
         window.location.reload(true);
       } else {
-        console.log(data.message);
         window.alert(data.message);
       }
     } catch (err) {

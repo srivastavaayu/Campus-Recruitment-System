@@ -20,7 +20,6 @@ function AllNotifications() {
       });
 
       const data = await res.json();
-      console.log(data);
       setNotifyData(data);
 
       if (!res.status === 200) {
@@ -97,9 +96,6 @@ function Notifications() {
 
   let name, value;
   const handleInputs = (e) => {
-    //console.log(e.target.name);
-    //console.log(e.target.value);
-
     name = e.target.name;
     value = e.target.value;
 
@@ -119,11 +115,7 @@ function Notifications() {
 
   const sendNotification = async (e) => {
     e.preventDefault();
-
-    console.log(data);
-
     const { students, companies, title, message } = data;
-    console.log(students, companies, title, message);
     try {
       const res = await fetch("/notifyData", {
         method: "POST",
@@ -141,10 +133,8 @@ function Notifications() {
       const resdt = await res.json();
 
       if (res.status === 201) {
-        console.log("Notification successfull");
         window.alert("Notification successfull");
       } else {
-        console.log("Notification unsuccessfull");
         window.alert("Notification unsuccessfull");
       }
     } catch (e) {

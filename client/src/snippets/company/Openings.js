@@ -18,7 +18,6 @@ function CurrentOpenings() {
       });
 
       const data = await res.json();
-      console.log(data);
       setJobData(data);
 
       if (!res.status === 200) {
@@ -32,10 +31,6 @@ function CurrentOpenings() {
   };
   //job archive back-end code
   const archive = async (jobId, title) => {
-    console.log("Inside Archive function");
-    console.log(jobId);
-    console.log(title);
-
     try {
       const res = await fetch("/jobArchive", {
         method: "POST",
@@ -51,10 +46,8 @@ function CurrentOpenings() {
       const data = await res.json();
 
       if (res.status === 202) {
-        console.log(data.message);
         window.alert(data.message);
       } else {
-        console.log(data.message);
         window.alert(data.message);
       }
     } catch (err) {
@@ -119,7 +112,6 @@ function AllOpenings() {
       });
 
       const data = await res.json();
-      console.log(data);
       setJobData(data);
 
       if (!res.status === 200) {
@@ -174,7 +166,6 @@ function Openings() {
 
   let name, value;
   const handleInputs = (e) => {
-    console.log(e.target.value);
     name = e.target.name;
     value = e.target.value;
 
@@ -203,11 +194,9 @@ function Openings() {
       const data = await res.json();
 
       if (res.status === 201) {
-        console.log("Job created successfully");
         window.alert("Job created successfully");
         window.location.reload(true);
       } else {
-        console.log("Job Id already exists");
         window.alert("Job Id already exists");
       }
     } catch (e) {
