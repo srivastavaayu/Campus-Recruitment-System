@@ -20,7 +20,6 @@ function CurrentOpenings() {
       });
 
       const data = await res.json();
-      console.log(data);
       setJobData(data);
 
       if (!res.status === 200) {
@@ -47,7 +46,6 @@ function CurrentOpenings() {
       });
 
       const data = await res.json();
-      console.log(data);
       setUserData(data);
 
       if (!res.status === 200) {
@@ -69,7 +67,7 @@ function CurrentOpenings() {
   });
 
   //companyDescription
-  const comapny = async (value) => {
+  const company = async (value) => {
     const creator = value;
     try {
       const res = await fetch("/companyDescription", {
@@ -86,9 +84,7 @@ function CurrentOpenings() {
 
       if (res.status === 202) {
         jobInfo.companyDescription = data.companyDescription;
-        console.log(jobInfo);
       } else {
-        console.log(data.message);
         window.alert(data.message);
       }
     } catch (err) {
@@ -97,7 +93,6 @@ function CurrentOpenings() {
   };
 
   const apply = async (e) => {
-    console.log("in apply");
     const { jobId, creator, title, description, companyDescription } = jobInfo;
     const { userName, name, email, phone, department } = userData;
 
@@ -122,7 +117,6 @@ function CurrentOpenings() {
       });
 
       const data = await res.json();
-      console.log(data.message);
       window.alert(data.message);
     } catch (err) {
       console.log(err);
@@ -132,13 +126,7 @@ function CurrentOpenings() {
   let name, value;
   const archive = async (jobId, creatorName, title, description) => {
     value = creatorName;
-    //console.log(value);
-    /*jobInfo.creator = value;
-    jobInfo.jobId = jobId;
-    jobInfo.title = title;
-    jobInfo.description = description;
-    console.log(jobInfo);*/
-    await comapny(value);
+    await company(value);
     setJobInfo({
       creator: value,
       jobId: jobId,
