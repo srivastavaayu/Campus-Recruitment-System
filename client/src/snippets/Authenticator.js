@@ -59,7 +59,6 @@ function Authenticator(props) {
   const [selectedValue, setSelectedValue] = useState();
   let name, value;
   const handleInputs = (e) => {
-    console.log(e.target.value);
     name = e.target.name;
     value = e.target.value;
 
@@ -70,8 +69,6 @@ function Authenticator(props) {
     name = "member";
     value = e.label;
     setUser({ ...user, [name]: value });
-    console.log(e.label);
-    console.log(user.member);
   };
 
   //sign up form
@@ -81,25 +78,18 @@ function Authenticator(props) {
     name = "member";
     value = e.label;
     setSignUser({ ...user, [name]: value });
-    console.log(e.label);
-    console.log(user.member);
   };
 
   const handleInputs1 = (e) => {
-    console.log(e.target.value);
     name = e.target.name;
     value = e.target.value;
 
     setSignUser({ ...signUser, [name]: value });
   };
-  const random = (e) => {
-    console.log("calling a function");
-  };
 
   //register a user
   const registerUser = async (e) => {
     e.preventDefault();
-    console.log(signUser);
 
     const { member, userName, name, email, password, rpassword } = signUser;
     try {
@@ -121,11 +111,9 @@ function Authenticator(props) {
       const data = await res.json();
 
       if (res.status === 201) {
-        console.log(data.message);
         window.alert(data.message);
         history.push("/");
       } else {
-        console.log(data.message);
         window.alert(data.message);
       }
     } catch (err) {
@@ -135,7 +123,6 @@ function Authenticator(props) {
 
   const logIn = async (e) => {
     e.preventDefault();
-    console.log(user);
     const { member, userName, password } = user;
     try {
       const res = await fetch("/login", {
@@ -153,7 +140,6 @@ function Authenticator(props) {
       const data = await res.json();
 
       if (res.status === 202) {
-        console.log("SuccessFul");
         window.alert("Successful");
 
         if (member == "Student") {
@@ -166,11 +152,9 @@ function Authenticator(props) {
           history.push("/Admin/Home");
         }
       } else {
-        console.log(data.message);
         window.alert(data.message);
       }
     } catch (e) {
-      console.log("Error");
       console.log(e);
     }
   };
