@@ -4,7 +4,7 @@ import Header from "./Header";
 
 function Profile() {
 
-  //back end 
+  //back end
 
 
   const [userData,setUserData] = useState({});
@@ -22,9 +22,8 @@ function Profile() {
       });
 
       const data = await res.json();
-      console.log(data);
       setUserData(data);
-            
+
 
 
       if(!res.status ===200){
@@ -41,7 +40,6 @@ function Profile() {
 
   let name,value;
   const handleInputs = (e) =>{
-      console.log(e.target.value);
       name = e.target.name;
       value=e.target.value;
 
@@ -69,10 +67,8 @@ function Profile() {
       const data = await res.json();
 
       if(res.status===202){
-        console.log("User updated successfully");
         window.alert("User Updated successfully");
       }else{
-        console.log("User updated unsuccessful");
         window.alert("User Updated unsuccessful");
       }
 
@@ -118,7 +114,7 @@ function Profile() {
                   type="text"
                   placeholder="Last Name"
                   name="adminProfileLastName"
-                  
+
                 />
               </div>
             </div>
