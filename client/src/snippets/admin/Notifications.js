@@ -126,9 +126,6 @@ function Notifications() {
 
   const sendNotification = async (e) => {
     e.preventDefault();
-
-    console.log(data);
-
     const { students, placementCoordinators, companies, title, message } = data;
     try {
       const res = await fetch("/notifyData", {
