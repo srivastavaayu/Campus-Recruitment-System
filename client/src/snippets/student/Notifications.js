@@ -20,7 +20,6 @@ function AllNotifications() {
       });
 
       const data = await res.json();
-      console.log(data);
       setNotifyData(data);
 
       if (!res.status === 200) {
